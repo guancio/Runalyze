@@ -1,0 +1,130 @@
+<?php
+
+namespace Runalyze\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Account
+ *
+ * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
+ * @ORM\Entity
+ */
+class Account
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=60, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mail", type="string", length=100, nullable=false)
+     */
+    private $mail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=5, nullable=false)
+     */
+    private $language;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=64, nullable=false)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=64, nullable=false)
+     */
+    private $salt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="session_id", type="string", length=32, nullable=true)
+     */
+    private $sessionId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="registerdate", type="integer", nullable=false)
+     */
+    private $registerdate;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lastaction", type="integer", nullable=false)
+     */
+    private $lastaction;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lastlogin", type="integer", nullable=false)
+     */
+    private $lastlogin;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="autologin_hash", type="string", length=32, nullable=false)
+     */
+    private $autologinHash;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="changepw_hash", type="string", length=32, nullable=false)
+     */
+    private $changepwHash;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="changepw_timelimit", type="integer", nullable=false)
+     */
+    private $changepwTimelimit;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="activation_hash", type="string", length=32, nullable=false)
+     */
+    private $activationHash;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deletion_hash", type="string", length=32, nullable=false)
+     */
+    private $deletionHash;
+
+
+}

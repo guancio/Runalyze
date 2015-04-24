@@ -1,0 +1,53 @@
+<?php
+
+namespace Runalyze\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Clothes
+ *
+ * @ORM\Table(name="clothes", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Entity
+ */
+class Clothes
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short", type="string", length=20, nullable=false)
+     */
+    private $short;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="order", type="boolean", nullable=false)
+     */
+    private $order;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="accountid", type="integer", nullable=false)
+     */
+    private $accountid;
+
+
+}

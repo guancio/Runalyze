@@ -1,0 +1,81 @@
+<?php
+
+namespace Runalyze\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * RunalyzeShoe
+ *
+ * @ORM\Table(name="runalyze_shoe", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Entity
+ */
+class RunalyzeShoe
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="since", type="string", length=10, nullable=false)
+     */
+    private $since = '01.01.2000';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="weight", type="smallint", nullable=false)
+     */
+    private $weight;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="km", type="decimal", precision=6, scale=2, nullable=false)
+     */
+    private $km = '0.00';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="time", type="integer", nullable=false)
+     */
+    private $time = '0';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="inuse", type="boolean", nullable=false)
+     */
+    private $inuse = '1';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="additionalKm", type="decimal", precision=6, scale=2, nullable=false)
+     */
+    private $additionalkm = '0.00';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="accountid", type="integer", nullable=false)
+     */
+    private $accountid;
+
+
+}

@@ -1,0 +1,88 @@
+<?php
+
+namespace Runalyze\CoreBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Dataset
+ *
+ * @ORM\Table(name="dataset", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Entity
+ */
+class Dataset
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=20, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=false)
+     */
+    private $active = '1';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="modus", type="boolean", nullable=false)
+     */
+    private $modus = '0';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=25, nullable=false)
+     */
+    private $class;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="style", type="string", length=100, nullable=false)
+     */
+    private $style;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="position", type="smallint", nullable=false)
+     */
+    private $position = '0';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="summary", type="boolean", nullable=false)
+     */
+    private $summary = '0';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="summary_mode", type="string", length=3, nullable=false)
+     */
+    private $summaryMode = 'SUM';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="accountid", type="integer", nullable=false)
+     */
+    private $accountid;
+
+
+}
