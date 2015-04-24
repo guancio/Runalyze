@@ -7,9 +7,22 @@
 Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
 
-## This Branch
-This Branch is a migrating Branch for moving Runalyze to Symfony2 for a faster development process. 
-It will be simultaneously developed with the v2 version.
+## Runalyze with Symfony
+We're planning to migrate to Symfony2.
+This branch will be simultaneously maintained with our current work on v2.1.
+
+## Install / Development
+The development of Runalyze v3+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements),
+[npm](https://nodejs.org/download/), [bower](http://bower.io/) (`sudo npm install -g bower`) and
+[grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`).
+
+To install all dependencies:
+```
+composer install
+bower install
+npm install
+grunt
+```
 
 ## License
 * TODO - we're currently seeking for the right license to choose

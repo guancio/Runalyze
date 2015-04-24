@@ -30,3 +30,6 @@ config.php
 /composer.phar
 /vendor/
 /web/bundles/
+/web/vendor/
+/web/_static/
+/node_modules/
