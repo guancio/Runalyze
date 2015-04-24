@@ -1,0 +1,3 @@
+runalyze_core_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RunalyzeCoreBundle:Default:index }

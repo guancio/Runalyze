@@ -1,3 +1,7 @@
+runalyze_core:
+    resource: "@RunalyzeCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
