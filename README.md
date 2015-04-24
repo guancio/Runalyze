@@ -1,4 +1,4 @@
-# [Runalyze v2.0](http://blog.runalyze.com)
+# [Runalyze v3.0](http://blog.runalyze.com)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
@@ -7,22 +7,9 @@
 Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
 
-## Git usage
-
-Up to now we don't have any automated migration script.
-You have to apply recent changes by hand from the respective update files in `inc/install/`.
-
-#### For v2.0:
-There were some big changes in our table structure.
-Activity data is now split over three tables (training, trackdata, route) to improve performance.
-We recommend creating a backup before refactoring your data.
-
-To refactor your data, you first have to apply all changes from `update-v1.5-to-v2.0.sql`.
-Afterwards you can copy your data to new tables with `refactor-db.php`.
-Change settings within the file and run it via cli or browser.
-In addition you can use `build/global.cleanup.php` similarly to run a cleanup for all accounts at once.
-
-Release details on runalyze.de: [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/), [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/).
+## This Branch
+This Branch is a migrating Branch for moving Runalyze to Symfony2 for a faster development process. 
+It will be simultaneously developed with the v2 version.
 
 ## License
 * TODO - we're currently seeking for the right license to choose
@@ -39,20 +26,6 @@ Release details on runalyze.de: [v2.0alpha](http://blog.runalyze.com/allgemein/r
  * [v1.2](http://blog.runalyze.com/allgemein/runalyze-v1-2/), 13.11.2012: Diagramme speichern, Öffentliche Trainingsliste
  * [v1.1](http://blog.runalyze.com/allgemein/runalyze-v1-1/), 19.07.2012: Erste Online-Version
  * [v1.0](http://blog.runalyze.com/allgemein/runalyze-v1-0/), 20.01.2012: Erste öffentliche Version
-
-## Installation
-* download [zip-file](https://github.com/Runalyze/Runalyze/releases) and extract
-* open `../runalyze/install.php` in your browser
-* follow the instructions
-
-More details: <http://runalyze.de/installation/> (only in german)
-
-## Update
-* delete all contents of `/runalyze/` except for `/config.php/`
-* download new zip-file and extract it
-* open `../runalyze/update.php` in your browser and look if a database update is needed
-* follow the instructions
-* for v2.0 only: run `../runalyze/refactor-db.php`
 
 ## Credits
 * Icons
