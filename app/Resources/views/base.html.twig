@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
-            {% set css_assets = app.debug ? app_assets.css.dev : [app_assets.css.prod] %}
+            {% set css_assets = app.debug ? app_assets.css.dev : app_assets.css.prod %}
 
             {% for asset in css_assets %}
                 <link rel="stylesheet" href="{{ asset(asset) }}" />
@@ -15,7 +15,7 @@
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}
-            {% set js_assets = app.debug ? app_assets.js.dev : [app_assets.js.prod] %}
+            {% set js_assets = app.debug ? app_assets.js.dev : app_assets.js.prod %}
 
             {% for asset in js_assets %}
                 <script src="{{ asset(asset) }}"></script>

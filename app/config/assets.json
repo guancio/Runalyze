@@ -61,6 +61,8 @@
 
       "vendor/fontIconPicker/jquery.fonticonpicker.js"
     ],
-    "prod": "_static/runalyze.min.js"
+    "prod": [
+      "_static/runalyze.min.js"
+    ]
   }
 }
