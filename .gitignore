@@ -33,3 +33,4 @@ config.php
 /web/vendor/
 /web/_static/
 /node_modules/
+composer.lock

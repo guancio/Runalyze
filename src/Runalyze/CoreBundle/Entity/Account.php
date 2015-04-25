@@ -127,6 +127,12 @@ class Account
     private $deletionHash;
 
 
+    public function __construct()
+    {
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
+    }
 
     /**
      * Get id
@@ -481,5 +487,41 @@ class Account
     public function getDeletionHash()
     {
         return $this->deletionHash;
+    }
+
+
+    public function eraseCredentials()
+    {
+    }
+
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            $this->salt
+        ) = unserialize($serialized);
     }
 }
