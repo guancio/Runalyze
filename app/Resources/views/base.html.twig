@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
         {% block stylesheets %}
             {% set css_assets = app.debug ? app_assets.css.dev : app_assets.css.prod %}
 
@@ -12,7 +12,7 @@
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
+    <body id="installer">
         {% block body %}{% endblock %}
         {% block javascripts %}
             {% set js_assets = app.debug ? app_assets.js.dev : app_assets.js.prod %}

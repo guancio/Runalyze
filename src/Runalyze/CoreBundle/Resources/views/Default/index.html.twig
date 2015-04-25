@@ -1,5 +1,109 @@
 {% extends '::base.html.twig' %}
 {% block title %}Runalyze - {% trans %}Please login{% endtrans %}{% endblock title %}
 {% block body %}
-Hello to Runalyze v3 - Symfony Edition!
+
+
+<div id="headline">
+	<a class="tab logo" href="http://www.runalyze.de/" target="_blank">Runalyze {{ version }}</a>
+	<a class="tab right" href="login.php"><i class="fa fa-fw fa-sign-in"></i> {% trans %}Please login{% endtrans %}</a>
+</div>
+
+<script>(function($){$(document).ready(function(){ Runalyze.init(); });})(jQuery);</script>
+
+<div id="overlay" style="display:block;"></div>
+
+<div id="ajax-outer">
+<div id="ajax" class="panel" style="display:block;">
+	<div class="panel-heading">
+		<div class="panel-menu">
+			<ul>
+				<li><a href="">Sprachauswahl</a></li>
+			</ul>
+		</div>
+		<h1>Runalyze {{ version }} - {% trans %}Please login{% endtrans %}</h1>
+	</div>
+	<div class="panel-content">
+		<div class="installer-window-container">
+	<div id="login">
+		<form action="login.php" method="post">
+
+			
+						<fieldset>
+				<legend>{% trans %}Login{% endtrans %}</legend>
+				<div class="w100">
+					<label for="username">{% trans %}Username{% endtrans %}</label>
+					<input id="username" name="username" class="middle-size " type="text" value="">
+				</div>
+				<div class="w100 clear">
+					<label for="password">{% trans %}Password{% endtrans %}</label>
+					<input id="password" name="password" class="middle-size " type="password">
+				</div>
+				<div class="w100 clear">
+					<label for="autologin" class="small">{% trans %}Remember me{% endtrans %}</label>
+					<input id="autologin" name="autologin" type="checkbox">
+				</div>
+			</fieldset>
+
+			
+			<div class="c">
+				<input type="submit" value="{% trans %}Login{% endtrans %}" name="submit">
+			</div>
+					</form>
+	</div>
+
+	<div id="registerFormular" style="display:none;">
+		<form action="login.php" method="post">
+			<fieldset>
+				<legend onclick="show('log');">{% trans %}Create a new account{% endtrans %}</legend>
+			<div class="w100 block "><label for="new_username">{% trans %}Username{% endtrans %}</label> <span class="input-with-unit"><input type="text" name="new_username" value="" id="new_username" class="middle-size"><label for="new_username" class="input-unit">&nbsp;<i class="fa fa-fw fa-user"></i></label></span></div><div class="w100 block "><label for="name">Name</label> <span class="input-with-unit"><input type="text" name="name" value="" id="name" class="middle-size"><label for="name" class="input-unit">&nbsp;<i class="fa fa-fw fa-user"></i></label></span></div><div class="w100 block "><label for="email">Email</label> <span class="input-with-unit"><input type="text" name="email" value="" id="email" class="middle-size"><label for="email" class="input-unit">&nbsp;<i class="fa fa-fw fa-envelope"></i></label></span></div><div class="w100 block "><label for="password">Password</label> <span class="input-with-unit"><input type="password" name="password" value="" id="password" class="middle-size"><label for="password" class="input-unit">&nbsp;<i class="fa fa-fw fa-lock"></i></label></span></div><div class="w100 block "><label for="password_again">Password again</label> <span class="input-with-unit"><input type="password" name="password_again" value="" id="password_again" class="middle-size"><label for="password_again" class="input-unit">&nbsp;<i class="fa fa-fw fa-lock"></i></label></span></div>
+						</fieldset>
+
+						<div class="c">
+				<input type="submit" value="{% trans %}Register{% endtrans %}" name="submit">
+			</div>
+					</form>
+	</div>
+
+	<div id="forgotPassword" style="display:none;">
+		<form action="login.php" method="post">
+			<fieldset>
+				<legend onclick="show('log');">{% trans %}Forgot your password?{% endtrans %}</legend>
+				<div class="w100">
+					<label for="send_username">{% trans %}Username{% endtrans %}</label>
+					<input id="send_username" name="send_username" class="middle-size" type="text" value="">
+				</div>
+
+					<p class="info small">{% trans %}A link for changing your password will be sent via email.{% endtrans %}</p>
+						</fieldset>
+
+			<div class="c">
+				<input type="submit" value="{% trans %}Send link{% endtrans %}" name="submit">
+			</div>
+		</form>
+	</div>
+</div>
+
+<div id="login-panel">
+	<a id="login-link" href="#" onclick="show('log')"><i class="fa fa-fw fa-lg fa-sign-in"></i> {% trans %}Login{% endtrans %}</a>
+	<a id="register-link" href="#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> {% trans %}Create a new account{% endtrans %}</a>
+	<a id="password-link" href="#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> {% trans %}Forgot your password?{% endtrans %}</a>
+</div>
+
+<script type="text/javascript">
+function show(what) {
+	var $log = $("#login"), $reg = $("#registerFormular"), $pwf = $("#forgotPassword");
+	if (what == 'reg') { $reg.show(); $log.hide(); $pwf.hide();	}
+	else if (what == 'pwf') { $pwf.show(); $reg.hide(); $log.hide(); }
+	else if (what == 'log') { $log.show(); $pwf.hide(); $reg.hide(); }
+}
+</script>
+
+
+<p class="text"></p>
+<p class="text small c login-window-stats">
+	Until now <strong>4210</strong> athletes are registered and	have logged <strong>4.522.383,96&nbsp;km</strong>.	<br>
+	<strong>8</strong> athletes are online.<br>
+</p>
+
+{{ include('RunalyzeCoreBundle:Default:footer-text.html.twig') }}
 {% endblock body %}
