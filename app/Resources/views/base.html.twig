@@ -10,16 +10,17 @@
                 <link rel="stylesheet" href="{{ asset(asset) }}" />
             {% endfor %}
         {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body id="installer">
-        {% block body %}{% endblock %}
-        {% block javascripts %}
+                {% block javascripts %}
             {% set js_assets = app.debug ? app_assets.js.dev : app_assets.js.prod %}
 
             {% for asset in js_assets %}
                 <script src="{{ asset(asset) }}"></script>
             {% endfor %}
         {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body id="installer">
+        {% block body %}{% endblock %}
+
     </body>
 </html>
