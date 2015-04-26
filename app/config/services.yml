@@ -4,7 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-services:
     app.sha256salted_encoder:
         class: Runalyze\CoreBundle\Service\Sha256SaltedEncoder
 #    service_name:

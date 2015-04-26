@@ -25,18 +25,21 @@
 	<div class="panel-content">
 		<div class="installer-window-container">
 	<div id="login">
-		<form action="login.php" method="post">
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData) }}</div>
+        {% endif %}
+		<form action="{{ path('login_check') }}" method="post">
 
 			
-						<fieldset>
+			<fieldset>
 				<legend>{% trans %}Login{% endtrans %}</legend>
 				<div class="w100">
 					<label for="username">{% trans %}Username{% endtrans %}</label>
-					<input id="username" name="username" class="middle-size " type="text" value="">
+					<input id="username" name="_username" class="middle-size " type="text" value="{{ last_username }}">
 				</div>
 				<div class="w100 clear">
 					<label for="password">{% trans %}Password{% endtrans %}</label>
-					<input id="password" name="password" class="middle-size " type="password">
+					<input id="password" name="_password" class="middle-size " type="password">
 				</div>
 				<div class="w100 clear">
 					<label for="autologin" class="small">{% trans %}Remember me{% endtrans %}</label>
@@ -101,9 +104,14 @@ function show(what) {
 
 <p class="text"></p>
 <p class="text small c login-window-stats">
-	Until now <strong>4210</strong> athletes are registered and	have logged <strong>4.522.383,96&nbsp;km</strong>.	<br>
+	Until now <strong>4210</strong> athletes are registered and have logged <strong>4.522.383,96&nbsp;km</strong>.	<br>
 	<strong>8</strong> athletes are online.<br>
 </p>
 
 {{ include('RunalyzeCoreBundle:Default:footer-text.html.twig') }}
+		</div>
+	</div>
+</div>
+
+
 {% endblock body %}

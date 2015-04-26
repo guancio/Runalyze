@@ -4,3 +4,5 @@ runalyze_core_homepage:
 security:
     resource: "@RunalyzeCoreBundle/Controller/SecurityController.php"
     type:    annotation
+logout:
+    path:   /logout

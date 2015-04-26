@@ -21,7 +21,7 @@ public function loginAction(Request $request)
     $lastUsername = $authenticationUtils->getLastUsername();
 
     return $this->render(
-        'RunalyzeBaseBundle:security:login.html.twig',
+        'RunalyzeCoreBundle:Default:index.html.twig',
         array(
             // last username entered by the user
             'last_username' => $lastUsername,
@@ -37,6 +37,7 @@ public function loginAction(Request $request)
         // this controller will not be executed,
         // as the route is handled by the Security system
     }
+    
     /**
      * @Route("/register", name="register_route")
      */

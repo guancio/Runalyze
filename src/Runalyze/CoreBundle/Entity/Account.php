@@ -3,6 +3,7 @@
 namespace Runalyze\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Account
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="account", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="mail", columns={"mail"}), @ORM\UniqueConstraint(name="session_id", columns={"session_id"})})
  * @ORM\Entity
  */
-class Account
+class Account implements UserInterface, \Serializable
 {
     /**
      * @var integer
