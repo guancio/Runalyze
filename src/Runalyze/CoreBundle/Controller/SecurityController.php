@@ -41,7 +41,7 @@ class SecurityController extends Controller
     }
     
     /**
-     * @Route("/register", name="register_route")
+     * @Route("/signup", name="register_route")
      */
     public function registerAction()
     {
@@ -54,7 +54,7 @@ class SecurityController extends Controller
             array('form' => $form->createView()));
     }
     /**
-     * @Route("/register/create", name="account_create")
+     * @Route("/signup/create", name="account_create")
      */
     public function createAction(Request $request)
     {
@@ -67,7 +67,7 @@ class SecurityController extends Controller
         if ($form->isValid()) {
             $registration = $form->getData();
 
-            $em->persist($registration->getUser());
+            $em->persist($registration->getAccount());
             $em->flush();
 
             //return $this->redirectToRoute(...);

@@ -11,7 +11,7 @@ class Registration
      * @Assert\Type(type="Runalyze\Core\Entity\Account")
      * @Assert\Valid()
      */
-    protected $user;
+    protected $account;
 
     /**
      * @Assert\NotBlank()
@@ -19,14 +19,14 @@ class Registration
      */
     protected $termsAccepted;
 
-    public function setUser(User $user)
+    public function setAccount(Account $account)
     {
-        $this->user = $user;
+        $this->account = $account;
     }
 
-    public function getUser()
+    public function getAccount()
     {
-        return $this->user;
+        return $this->account;
     }
 
     public function getTermsAccepted()
