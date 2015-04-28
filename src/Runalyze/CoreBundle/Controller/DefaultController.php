@@ -42,11 +42,25 @@ class DefaultController extends Controller
     
     public function UserStatsAction()
     {
-       /* $qb = $entityManager->createQueryBuilder();
-        $qb->select('count(account.id)');
-        $qb->from('RunalyzeCoreBundle:Account','account');
-        $count = $qb->getQuery()->getSingleScalarResult();
-*/
-        return $this->render('RunalyzeCoreBundle:Default:userstats.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        //Count Users
+        $users = $em->createQueryBuilder()
+                        ->select('count(account.id)')
+                        ->from('RunalyzeCoreBundle:Account','account')
+                        ->getQuery()
+                        ->getSingleScalarResult();
+        // Get all kilometers of all users
+        $userkm = $em->createQueryBuilder()
+                        ->select('sum(training.distance)')
+                        ->from('RunalyzeCoreBundle:Training','training')
+                        ->getQuery()
+                        ->getSingleScalarResult();
+        $userkm = (!empty($userkm) ? $userkm : '0,00' );
+        
+        // TODO - get current logged in users
+        
+        return $this->render('RunalyzeCoreBundle:Default:userstats.html.twig',
+                array('users' => $users, 
+                      'userkm' => $userkm));
     }
 }

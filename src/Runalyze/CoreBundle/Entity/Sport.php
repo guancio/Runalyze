@@ -3,6 +3,7 @@
 namespace Runalyze\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Sport
@@ -361,5 +362,15 @@ class Sport
     public function getAccountid()
     {
         return $this->accountid;
+    }
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Training", mappedBy="sportid")
+     */
+    protected $trainings;
+    
+    public function __construct()
+    {
+        $this->trainings = new ArrayCollection();
     }
 }

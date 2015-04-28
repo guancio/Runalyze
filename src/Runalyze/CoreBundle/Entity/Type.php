@@ -3,6 +3,7 @@
 namespace Runalyze\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Type
@@ -182,4 +183,5 @@ class Type
     {
         return $this->accountid;
     }
+    
 }

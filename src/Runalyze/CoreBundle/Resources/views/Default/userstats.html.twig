@@ -1,4 +1,6 @@
             <p class="text small c login-window-stats">
-                    Until now <strong> </strong> athletes are registered and have logged <strong>4.522.383,96&nbsp;km</strong>.	<br>
-                    <strong>8</strong> athletes are online.<br>
+                {% transchoice users %}
+                    {0,1} Until now <strong> %users% </strong> athlete is registered and has|]0,Inf] Until now <strong> %users% </strong> athletes are registered and have
+                {% endtranschoice %}
+                     logged <strong>{{ userkm }} &nbsp;km</strong>.	<br>
             </p>

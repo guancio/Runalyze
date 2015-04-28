@@ -55,7 +55,7 @@ class Account implements UserInterface, \Serializable
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="password", type="string", length=64, nullable=false)
      */
     private $password;

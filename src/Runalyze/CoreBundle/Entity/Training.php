@@ -1202,4 +1202,16 @@ class Training
     {
         return $this->activityId;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Sport", inversedBy="trainings")
+     * @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     */
+    protected $sportid;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Trackdata", inversedBy="trainings")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    protected $trackdata;
 }

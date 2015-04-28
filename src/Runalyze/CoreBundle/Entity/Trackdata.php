@@ -362,4 +362,9 @@ class Trackdata
     {
         return $this->pauses;
     }
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Training", mappedBy="trackdata")
+     */
+    protected $trainings;
 }
