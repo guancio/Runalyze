@@ -566,4 +566,202 @@ class Account implements UserInterface, \Serializable
      */
     protected $clothes;
     
+
+    /**
+     * Add userdata
+     *
+     * @param \Runalyze\CoreBundle\Entity\User $userdata
+     * @return Account
+     */
+    public function addUserdatum(\Runalyze\CoreBundle\Entity\User $userdata)
+    {
+        $this->userdata[] = $userdata;
+
+        return $this;
+    }
+
+    /**
+     * Remove userdata
+     *
+     * @param \Runalyze\CoreBundle\Entity\User $userdata
+     */
+    public function removeUserdatum(\Runalyze\CoreBundle\Entity\User $userdata)
+    {
+        $this->userdata->removeElement($userdata);
+    }
+
+    /**
+     * Get userdata
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserdata()
+    {
+        return $this->userdata;
+    }
+
+    /**
+     * Add shoes
+     *
+     * @param \Runalyze\CoreBundle\Entity\Shoe $shoes
+     * @return Account
+     */
+    public function addShoe(\Runalyze\CoreBundle\Entity\Shoe $shoes)
+    {
+        $this->shoes[] = $shoes;
+
+        return $this;
+    }
+
+    /**
+     * Remove shoes
+     *
+     * @param \Runalyze\CoreBundle\Entity\Shoe $shoes
+     */
+    public function removeShoe(\Runalyze\CoreBundle\Entity\Shoe $shoes)
+    {
+        $this->shoes->removeElement($shoes);
+    }
+
+    /**
+     * Get shoes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getShoes()
+    {
+        return $this->shoes;
+    }
+
+    /**
+     * Add dataset
+     *
+     * @param \Runalyze\CoreBundle\Entity\Dataset $dataset
+     * @return Account
+     */
+    public function addDataset(\Runalyze\CoreBundle\Entity\Dataset $dataset)
+    {
+        $this->dataset[] = $dataset;
+
+        return $this;
+    }
+
+    /**
+     * Remove dataset
+     *
+     * @param \Runalyze\CoreBundle\Entity\Dataset $dataset
+     */
+    public function removeDataset(\Runalyze\CoreBundle\Entity\Dataset $dataset)
+    {
+        $this->dataset->removeElement($dataset);
+    }
+
+    /**
+     * Get dataset
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDataset()
+    {
+        return $this->dataset;
+    }
+
+    /**
+     * Add conf
+     *
+     * @param \Runalyze\CoreBundle\Entity\Conf $conf
+     * @return Account
+     */
+    public function addConf(\Runalyze\CoreBundle\Entity\Conf $conf)
+    {
+        $this->conf[] = $conf;
+
+        return $this;
+    }
+
+    /**
+     * Remove conf
+     *
+     * @param \Runalyze\CoreBundle\Entity\Conf $conf
+     */
+    public function removeConf(\Runalyze\CoreBundle\Entity\Conf $conf)
+    {
+        $this->conf->removeElement($conf);
+    }
+
+    /**
+     * Get conf
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConf()
+    {
+        return $this->conf;
+    }
+
+    /**
+     * Add trainings
+     *
+     * @param \Runalyze\CoreBundle\Entity\Training $trainings
+     * @return Account
+     */
+    public function addTraining(\Runalyze\CoreBundle\Entity\Training $trainings)
+    {
+        $this->trainings[] = $trainings;
+
+        return $this;
+    }
+
+    /**
+     * Remove trainings
+     *
+     * @param \Runalyze\CoreBundle\Entity\Training $trainings
+     */
+    public function removeTraining(\Runalyze\CoreBundle\Entity\Training $trainings)
+    {
+        $this->trainings->removeElement($trainings);
+    }
+
+    /**
+     * Get trainings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrainings()
+    {
+        return $this->trainings;
+    }
+
+    /**
+     * Add clothes
+     *
+     * @param \Runalyze\CoreBundle\Entity\Clothes $clothes
+     * @return Account
+     */
+    public function addClothe(\Runalyze\CoreBundle\Entity\Clothes $clothes)
+    {
+        $this->clothes[] = $clothes;
+
+        return $this;
+    }
+
+    /**
+     * Remove clothes
+     *
+     * @param \Runalyze\CoreBundle\Entity\Clothes $clothes
+     */
+    public function removeClothe(\Runalyze\CoreBundle\Entity\Clothes $clothes)
+    {
+        $this->clothes->removeElement($clothes);
+    }
+
+    /**
+     * Get clothes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClothes()
+    {
+        return $this->clothes;
+    }
 }

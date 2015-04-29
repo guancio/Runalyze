@@ -129,4 +129,27 @@ class PluginConf
      * @ORM\JoinColumn(name="pluginid", referencedColumnName="id")
      */
     protected $plugin;
+
+    /**
+     * Set plugin
+     *
+     * @param \Runalyze\CoreBundle\Entity\Plugin $plugin
+     * @return PluginConf
+     */
+    public function setPlugin(\Runalyze\CoreBundle\Entity\Plugin $plugin = null)
+    {
+        $this->plugin = $plugin;
+
+        return $this;
+    }
+
+    /**
+     * Get plugin
+     *
+     * @return \Runalyze\CoreBundle\Entity\Plugin 
+     */
+    public function getPlugin()
+    {
+        return $this->plugin;
+    }
 }

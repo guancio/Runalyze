@@ -279,4 +279,27 @@ class User
      * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      */
     protected $account;
+
+    /**
+     * Set account
+     *
+     * @param \Runalyze\CoreBundle\Entity\Account $account
+     * @return User
+     */
+    public function setAccount(\Runalyze\CoreBundle\Entity\Account $account = null)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return \Runalyze\CoreBundle\Entity\Account 
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
 }

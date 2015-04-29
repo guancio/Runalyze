@@ -1221,4 +1221,73 @@ class Training
      * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      */
     protected $account;
+
+    /**
+     * Set sport
+     *
+     * @param \Runalyze\CoreBundle\Entity\Sport $sport
+     * @return Training
+     */
+    public function setSport(\Runalyze\CoreBundle\Entity\Sport $sport = null)
+    {
+        $this->sport = $sport;
+
+        return $this;
+    }
+
+    /**
+     * Get sport
+     *
+     * @return \Runalyze\CoreBundle\Entity\Sport 
+     */
+    public function getSport()
+    {
+        return $this->sport;
+    }
+
+    /**
+     * Set trainingRoute
+     *
+     * @param \Runalyze\CoreBundle\Entity\Route $trainingRoute
+     * @return Training
+     */
+    public function setTrainingRoute(\Runalyze\CoreBundle\Entity\Route $trainingRoute = null)
+    {
+        $this->trainingRoute = $trainingRoute;
+
+        return $this;
+    }
+
+    /**
+     * Get trainingRoute
+     *
+     * @return \Runalyze\CoreBundle\Entity\Route 
+     */
+    public function getTrainingRoute()
+    {
+        return $this->trainingRoute;
+    }
+
+    /**
+     * Set account
+     *
+     * @param \Runalyze\CoreBundle\Entity\Account $account
+     * @return Training
+     */
+    public function setAccount(\Runalyze\CoreBundle\Entity\Account $account = null)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return \Runalyze\CoreBundle\Entity\Account 
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
 }

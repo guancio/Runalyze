@@ -194,4 +194,37 @@ class Type
      */
     protected $sport;
     
+
+    /**
+     * Add sport
+     *
+     * @param \Runalyze\CoreBundle\Entity\Sport $sport
+     * @return Type
+     */
+    public function addSport(\Runalyze\CoreBundle\Entity\Sport $sport)
+    {
+        $this->sport[] = $sport;
+
+        return $this;
+    }
+
+    /**
+     * Remove sport
+     *
+     * @param \Runalyze\CoreBundle\Entity\Sport $sport
+     */
+    public function removeSport(\Runalyze\CoreBundle\Entity\Sport $sport)
+    {
+        $this->sport->removeElement($sport);
+    }
+
+    /**
+     * Get sport
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSport()
+    {
+        return $this->sport;
+    }
 }

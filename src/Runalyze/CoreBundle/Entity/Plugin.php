@@ -192,4 +192,37 @@ class Plugin
     {
         $this->pluginconf = new ArrayCollection();
     }
+
+    /**
+     * Add pluginconf
+     *
+     * @param \Runalyze\CoreBundle\Entity\PluginConf $pluginconf
+     * @return Plugin
+     */
+    public function addPluginconf(\Runalyze\CoreBundle\Entity\PluginConf $pluginconf)
+    {
+        $this->pluginconf[] = $pluginconf;
+
+        return $this;
+    }
+
+    /**
+     * Remove pluginconf
+     *
+     * @param \Runalyze\CoreBundle\Entity\PluginConf $pluginconf
+     */
+    public function removePluginconf(\Runalyze\CoreBundle\Entity\PluginConf $pluginconf)
+    {
+        $this->pluginconf->removeElement($pluginconf);
+    }
+
+    /**
+     * Get pluginconf
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPluginconf()
+    {
+        return $this->pluginconf;
+    }
 }

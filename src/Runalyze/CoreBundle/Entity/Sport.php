@@ -379,4 +379,60 @@ class Sport
      * @ORM\JoinColumn(name="sportid", referencedColumnName="id")
      */
     protected $type;
+
+    /**
+     * Add trainings
+     *
+     * @param \Runalyze\CoreBundle\Entity\Training $trainings
+     * @return Sport
+     */
+    public function addTraining(\Runalyze\CoreBundle\Entity\Training $trainings)
+    {
+        $this->trainings[] = $trainings;
+
+        return $this;
+    }
+
+    /**
+     * Remove trainings
+     *
+     * @param \Runalyze\CoreBundle\Entity\Training $trainings
+     */
+    public function removeTraining(\Runalyze\CoreBundle\Entity\Training $trainings)
+    {
+        $this->trainings->removeElement($trainings);
+    }
+
+    /**
+     * Get trainings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrainings()
+    {
+        return $this->trainings;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \Runalyze\CoreBundle\Entity\Type $type
+     * @return Sport
+     */
+    public function setType(\Runalyze\CoreBundle\Entity\Type $type = null)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Runalyze\CoreBundle\Entity\Type 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }
