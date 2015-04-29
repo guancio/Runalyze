@@ -152,4 +152,10 @@ class Conf
     {
         return $this->accountid;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="conf")
+     * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     */
+    protected $account;
 }

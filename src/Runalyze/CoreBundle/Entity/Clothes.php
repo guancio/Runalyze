@@ -152,4 +152,10 @@ class Clothes
     {
         return $this->accountid;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="clothes")
+     * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     */
+    protected $account;
 }

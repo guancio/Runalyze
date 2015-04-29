@@ -5,7 +5,7 @@ namespace Runalyze\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Account
@@ -135,6 +135,12 @@ class Account implements UserInterface, \Serializable
     {
         $this->isActive = true;
         $this->setRegisterdate(date_timestamp_get(new \DateTime()));
+        $this->userdata = new ArrayCollection();
+        $this->shoes = new ArrayCollection();
+        $this->dataset = new ArrayCollection();
+        $this->conf = new ArrayCollection();
+        $this->trainings = new ArrayCollection();
+        $this->clothes = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
     }
@@ -529,4 +535,35 @@ class Account implements UserInterface, \Serializable
             $this->salt
         ) = unserialize($serialized);
     }
+    
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="account")
+     */
+    protected $userdata;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Shoe", mappedBy="account")
+     */
+    protected $shoes;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Dataset", mappedBy="account")
+     */
+    protected $dataset;
+   
+     /**
+     * @ORM\OneToMany(targetEntity="Conf", mappedBy="account")
+     */
+    protected $conf;
+    
+      /**
+     * @ORM\OneToMany(targetEntity="Training", mappedBy="account")
+     */
+    protected $trainings;
+    
+      /**
+     * @ORM\OneToMany(targetEntity="Clothes", mappedBy="account")
+     */
+    protected $clothes;
+    
 }

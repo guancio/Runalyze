@@ -3,6 +3,7 @@
 namespace Runalyze\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Training
@@ -1207,11 +1208,17 @@ class Training
      * @ORM\ManyToOne(targetEntity="Sport", inversedBy="trainings")
      * @ORM\JoinColumn(name="sportid", referencedColumnName="id")
      */
-    protected $sportid;
+    protected $sport;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Trackdata", inversedBy="trainings")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Route")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     **/
+    private $trainingRoute;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="trainings")
+     * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
      */
-    protected $trackdata;
+    protected $account;
 }

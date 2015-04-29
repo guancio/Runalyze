@@ -184,4 +184,14 @@ class Type
         return $this->accountid;
     }
     
+    public function __construct()
+    {
+        $this->sport = new ArrayCollection();
+    }
+    
+      /**
+     * @ORM\OneToMany(targetEntity="Sport", mappedBy="type")
+     */
+    protected $sport;
+    
 }

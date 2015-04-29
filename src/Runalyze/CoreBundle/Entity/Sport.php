@@ -365,7 +365,7 @@ class Sport
     }
     
     /**
-     * @ORM\OneToMany(targetEntity="Training", mappedBy="sportid")
+     * @ORM\OneToMany(targetEntity="Training", mappedBy="sport")
      */
     protected $trainings;
     
@@ -373,4 +373,10 @@ class Sport
     {
         $this->trainings = new ArrayCollection();
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Type", inversedBy="sport")
+     * @ORM\JoinColumn(name="sportid", referencedColumnName="id")
+     */
+    protected $type;
 }

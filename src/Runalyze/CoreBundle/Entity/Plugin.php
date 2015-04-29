@@ -182,4 +182,14 @@ class Plugin
     {
         return $this->accountid;
     }
+    
+    /**
+     * @ORM\OneToMany(targetEntity="PluginConf", mappedBy="plugin")
+     */
+    protected $pluginconf;
+
+    public function __construct()
+    {
+        $this->pluginconf = new ArrayCollection();
+    }
 }

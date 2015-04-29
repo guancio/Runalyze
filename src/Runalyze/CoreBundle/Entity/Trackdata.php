@@ -3,6 +3,7 @@
 namespace Runalyze\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Trackdata
@@ -363,8 +364,4 @@ class Trackdata
         return $this->pauses;
     }
     
-    /**
-     * @ORM\OneToMany(targetEntity="Training", mappedBy="trackdata")
-     */
-    protected $trainings;
 }

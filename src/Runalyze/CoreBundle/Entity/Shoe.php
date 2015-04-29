@@ -5,12 +5,12 @@ namespace Runalyze\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * RunalyzeShoe
+ * Shoe
  *
- * @ORM\Table(name="runalyze_shoe", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
+ * @ORM\Table(name="shoe", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
  * @ORM\Entity
  */
-class RunalyzeShoe
+class Shoe
 {
     /**
      * @var integer
@@ -93,7 +93,7 @@ class RunalyzeShoe
      * Set name
      *
      * @param string $name
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setName($name)
     {
@@ -116,7 +116,7 @@ class RunalyzeShoe
      * Set since
      *
      * @param string $since
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setSince($since)
     {
@@ -139,7 +139,7 @@ class RunalyzeShoe
      * Set weight
      *
      * @param integer $weight
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setWeight($weight)
     {
@@ -162,7 +162,7 @@ class RunalyzeShoe
      * Set km
      *
      * @param string $km
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setKm($km)
     {
@@ -185,7 +185,7 @@ class RunalyzeShoe
      * Set time
      *
      * @param integer $time
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setTime($time)
     {
@@ -208,7 +208,7 @@ class RunalyzeShoe
      * Set inuse
      *
      * @param boolean $inuse
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setInuse($inuse)
     {
@@ -231,7 +231,7 @@ class RunalyzeShoe
      * Set additionalkm
      *
      * @param string $additionalkm
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setAdditionalkm($additionalkm)
     {
@@ -254,7 +254,7 @@ class RunalyzeShoe
      * Set accountid
      *
      * @param integer $accountid
-     * @return RunalyzeShoe
+     * @return Shoe
      */
     public function setAccountid($accountid)
     {
@@ -272,4 +272,10 @@ class RunalyzeShoe
     {
         return $this->accountid;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="shoes")
+     * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     */
+    protected $account;
 }

@@ -273,4 +273,10 @@ class User
     {
         return $this->accountid;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="userdata")
+     * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     */
+    protected $account;
 }

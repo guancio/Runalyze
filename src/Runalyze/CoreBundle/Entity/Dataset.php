@@ -302,4 +302,10 @@ class Dataset
     {
         return $this->accountid;
     }
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="dataset")
+     * @ORM\JoinColumn(name="accountid", referencedColumnName="id")
+     */
+    protected $account;
 }

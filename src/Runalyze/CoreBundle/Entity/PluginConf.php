@@ -122,4 +122,11 @@ class PluginConf
     {
         return $this->value;
     }
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Plugin", inversedBy="pluginconf")
+     * @ORM\JoinColumn(name="pluginid", referencedColumnName="id")
+     */
+    protected $plugin;
 }
