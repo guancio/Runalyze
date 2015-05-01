@@ -4,8 +4,7 @@ namespace Runalyze\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Runalyze\CoreBundle\Entity\Account;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class DefaultController extends Controller
 {
@@ -14,20 +13,31 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
 
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+            $authenticationUtils = $this->get('security.authentication_utils');
 
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+            // get the login error if there is one
+            $error = $authenticationUtils->getLastAuthenticationError();
 
-        return $this->render('RunalyzeCoreBundle:Default:index.html.twig',
-        array(
-            'last_username' => $lastUsername,
-            'error'         => $error,
-        ));
+            // last username entered by the user
+            $lastUsername = $authenticationUtils->getLastUsername();
+
+            return $this->render('RunalyzeCoreBundle:Security:login.html.twig',
+            array(
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            ));
+
     }
+
+        /**
+        * @Security("has_role('ROLE_USER')")
+        * @Route("/", name="start")
+        */
+       public function appAction()
+       {
+           return $this->render('RunalyzeCoreBundle:Default:app.html.twig');
+       }   
     
     /**
      * @Route("/impressum", name="impressum")

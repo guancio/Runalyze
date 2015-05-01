@@ -2,12 +2,38 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+            {% set css_assets = app.debug ? app_assets.css.dev : app_assets.css.prod %}
+
+            {% for asset in css_assets %}
+                <link rel="stylesheet" href="{{ asset(asset) }}" />
+            {% endfor %}
+        {% endblock %}
+                {% block javascripts %}
+            {% set js_assets = app.debug ? app_assets.js.dev : app_assets.js.prod %}
+
+            {% for asset in js_assets %}
+                <script src="{{ asset(asset) }}"></script>
+            {% endfor %}
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body id="installer">
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <body id="home">
+        <div id="flot-loader"></div>
+
+<div id="headline">
+	<a class="tab logo" href="" title="Runalyze">Runalyze</a>
+        <a class="tab right" href="{{ path('logout') }}" title="Logout>
+		<i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a>
+		<a class="tab right b" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>{{ app.user.username }}</a>
+
+
+	<span class="left b">
+		<a class="tab" href=""><i class="fa fa-fw fa-lg fa-cog"></i>{% trans %}Configuration{% endtrans %}</a>
+		<a class="tab" href=""><i class="fa fa-fw fa-lg fa-dashboard"></i>{% trans %}Tools{% endtrans %}</a>
+		<a class="tab" href=""><i class="fa fa-fw fa-lg fa-question-circle"></i>{% trans %}Help{% endtrans %}</a>
+	</span>
+</div>
     </body>
 </html>

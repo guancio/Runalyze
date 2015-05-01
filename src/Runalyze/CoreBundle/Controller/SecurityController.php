@@ -23,7 +23,7 @@ class SecurityController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
-            'RunalyzeCoreBundle:Default:index.html.twig',
+            'RunalyzeCoreBundle:Security:login.html.twig',
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,
