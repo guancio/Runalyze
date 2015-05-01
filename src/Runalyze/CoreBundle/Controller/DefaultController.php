@@ -3,10 +3,15 @@
 namespace Runalyze\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Runalyze\CoreBundle\Entity\Account;
+
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/")
+     */
     public function indexAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
@@ -25,7 +30,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/impressum")
+     * @Route("/impressum", name="impressum")
      */
     public function impressumAction()
     {
@@ -33,7 +38,7 @@ class DefaultController extends Controller
     }
     
     /**
-    * @Route("/privacy")
+    * @Route("/privacy", name="privacy")
     */
     public function privacyAction()
     {
@@ -58,7 +63,8 @@ class DefaultController extends Controller
         $userkm = (!empty($userkm) ? $userkm : '0,00' );
         
         // TODO - get current logged in users
-        
+  
+       
         return $this->render('RunalyzeCoreBundle:Default:userstats.html.twig',
                 array('users' => $users, 
                       'userkm' => $userkm));

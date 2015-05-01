@@ -1,6 +1,6 @@
-runalyze_core_homepage:
-    path:     /
-    defaults: { _controller: RunalyzeCoreBundle:Default:index }
+start:
+    resource: "@RunalyzeCoreBundle/Controller/DefaultController.php"
+    type:    annotation
 security:
     resource: "@RunalyzeCoreBundle/Controller/SecurityController.php"
     type:    annotation
