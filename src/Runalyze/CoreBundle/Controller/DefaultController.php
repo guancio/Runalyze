@@ -10,7 +10,7 @@ use Runalyze\CoreBundle\Entity\Account;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="start")
      */
     public function indexAction()
     {

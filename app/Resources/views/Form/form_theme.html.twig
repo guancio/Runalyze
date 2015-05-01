@@ -1,0 +1,24 @@
+{% block form_row %}
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+{% endblock form_row %}
+{%- block form_widget_simple -%}
+<div class="w100 block">
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+</div>    
+{%- endblock form_widget_simple -%}
+
+
+
+
+{%- block button_row -%}
+<div class="c">
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row -%}
+{% block submit_widget %}
+     {%- set type = type|default('submit') -%}
+     <input type="{{ type }}" value="{{ name }}" name="{{ name }}">
+{% endblock submit_widget %}

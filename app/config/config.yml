@@ -30,6 +30,10 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    templating:
+        form:
+            resources:
+                - 'Form'
 
 # Twig Configuration
 twig:
@@ -38,6 +42,9 @@ twig:
     globals:
       app_assets: %app.assets%
       version: %runalyze.version%
+    form:
+        resources:
+            - '::Form/form_theme.html.twig'
 
 # Assetic Configuration
 assetic:
