@@ -1,6 +1,9 @@
 start:
     resource: "@RunalyzeCoreBundle/Controller/DefaultController.php"
     type:    annotation
+databrowser:
+    resource: "@RunalyzeCoreBundle/Controller/DatabrowserController.php"
+    type:    annotation
 security:
     resource: "@RunalyzeCoreBundle/Controller/SecurityController.php"
     type:    annotation

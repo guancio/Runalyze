@@ -1,5 +1,13 @@
 {% extends '::runalyze.html.twig' %}
 {% block title %}Runalyze{% endblock title %}
 {% block body %}
-test
+    <div id="main">
+            <div id="data-browser" class="panel">
+                <div id="data-browser-inner">
+{{ render(controller('RunalyzeCoreBundle:Databrowser:Index')) }}
+                </div>
+            </div>
+</div>
+<script>Runalyze.init({"sharedView":false});</script>
+
 {% endblock body %}
