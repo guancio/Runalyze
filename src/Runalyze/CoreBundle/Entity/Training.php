@@ -9,7 +9,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Training
  *
  * @ORM\Table(name="training", indexes={@ORM\Index(name="time", columns={"accountid", "time"}), @ORM\Index(name="sportid", columns={"accountid", "sportid"}), @ORM\Index(name="typeid", columns={"accountid", "typeid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\CoreBundle\Entity\TrainingRepository")
  */
 class Training
 {
@@ -1212,7 +1212,7 @@ class Training
     
     /**
      * @ORM\OneToOne(targetEntity="Route")
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="routeid", referencedColumnName="id")
      **/
     private $trainingRoute;
 

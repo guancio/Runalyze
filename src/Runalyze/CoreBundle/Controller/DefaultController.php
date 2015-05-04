@@ -31,14 +31,14 @@ class DefaultController extends Controller
 
     }
 
-        /**
-        * @Security("has_role('ROLE_USER')")
-        * @Route("/", name="start")
-        */
-       public function appAction()
-       {
-           return $this->render('RunalyzeCoreBundle:Default:app.html.twig');
-       }   
+    /**
+    * @Security("has_role('ROLE_USER')")
+    * @Route("/", name="start")
+    */
+   public function appAction()
+   {
+       return $this->render('RunalyzeCoreBundle:Default:app.html.twig');
+   }   
     
     /**
      * @Route("/impressum", name="impressum")
