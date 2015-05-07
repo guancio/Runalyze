@@ -1,4 +1,8 @@
 services:
+    runalyze.configuration:
+        class: Runalyze\CoreBundle\Service\Configuration
+        arguments: [@doctrine.orm.entity_manager] 
+        
 #    runalyze_core.example:
 #        class: Runalyze\CoreBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
