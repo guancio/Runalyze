@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Sport
  *
  * @ORM\Table(name="sport", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\CoreBundle\Entity\SportRepository")
  */
 class Sport
 {

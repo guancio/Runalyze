@@ -32,6 +32,7 @@ class TrainingRepository extends EntityRepository
                 ->where('t.accountid = :accountid')
                 ->andWhere('t.time >= :starttime')
                 ->andWhere('t.time <= :endtime')
+                ->orderBy('t.time', 'ASC')
                 ->setParameters($parameters)
                 ->getQuery()->getResult();
     }

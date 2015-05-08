@@ -23,26 +23,61 @@ class DatabrowserController extends Controller
         
         $time = $this->initTimestamps($request);
         
+        //Get title
         $title['month'] = Time::Month(date("m", $time['start']));
         $title['year'] = date("Y", $time['start']);
         $title['week'] = date("W", $time['start']);
+        //Get times for navigation
         $backtime = DBTime::prevTimestamps($time['start'], $time['end']);
         $nexttime = DBTime::nextTimestamps($time['start'], $time['end']);
         $year = DBTime::year($time['start']);
         $month = DBTime::month($time['start']);
         $week = DBTime::week($time['start']);
+        //Get Dataset
         $dataset = $this->get('runalyze.dataset')->getAll();
+        //Get needed trainings
         $trainings = $em->getRepository('RunalyzeCoreBundle:Training')->findByTimeRangeForAccount($time['start'], $time['end'], $accountid);
-        dump($trainings);
+        //Get ShortSports
+        $emSp = $em->getRepository('RunalyzeCoreBundle:Sport')->getShortSport($accountid);
+        $shortSport = array(); 
+        foreach($emSp as $Sp) {
+            $shortSport[] = $Sp['id'];
+        }
+        
+        //Create empty days array
+        $days = array();
+        for ($w = 0; $w <= ($time['days'] - 1); $w++) {
+            $days[] = array(
+                'date' => mktime(0, 0, 0, date("m", $time['start']), date("d", $time['start']) + $w, date("Y", $time['start'])),
+                'shorts' => array(),
+                'trainings' => array());
+        }
+        
+
+        foreach ($trainings as $Training) {
+                $w = Time::diffInDays($Training->getTime(), $time['start']);
+
+                if (in_array($Training->getSportid(), $shortSport)) {
+                        $days[$w]['shorts'][]    = $Training;
+                } else {
+                        $days[$w]['trainings'][] = $Training;
+                }
+        }
+        
+        
+        
+        dump($days);
+
+
         return $this->render('RunalyzeCoreBundle:Databrowser:databrowser.html.twig',
                 array('title' => $title,
                       'backtime' => $backtime,
                       'nexttime' => $nexttime,
-                      'days' => $time['days'],
+                      'days' => $days,
                       'year' => $year,
                       'month' => $month,
                       'week' => $week,
-                      'trainings' => $trainings,
+                      'shortSport' => $shortSport,
                       'dataset' => $dataset
                     ));
     }
@@ -68,5 +103,6 @@ class DatabrowserController extends Controller
             $rdata['days'] = round(($rdata['end'] - $rdata['start']) / 86400);
             return $rdata;
     }
+    
 
 }

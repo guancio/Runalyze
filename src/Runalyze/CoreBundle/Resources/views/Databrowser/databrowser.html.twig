@@ -37,19 +37,42 @@
                 <div id="data-browser-container">
                     <table class="zebra-style">
                         <tbody class="top-and-bottom-border">    
-                         {% for i in 0..days %}
-                        <tr class="r training">
-                            {{ i }}
+                        {% for day in days %}
+                            {% if day.trainings %}
+                                <tr class="r training">
+                                <td class="l" style="width:24px;">
+                                    {% if day.shorts %}
+                                        {% include 'RunalyzeCoreBundle:Databrowser:_shortTraining.html.twig' with {'day.shorts': 'day.shorts'}%}
+                                    {% endif %}
+                                </td>
+                                <td class="l">
+                                    {{ day.date|date("d.m.") }}
+                                    <a data-size="small" class="window" href="{{ day.date|date("d.m.y") }}"><i class="fa fa-fw fa-plus fa-grey"></i></a>
+                                    
+                                    {{ day.date|date("D") }}
+                                 </td>
+                                </tr>
+                             {% else %}
+                                 <tr class="r">
+                            <td class="l" style="width:24px;">
+                                {% for short in day.shorts %}
+                                    {% include 'RunalyzeCoreBundle:Databrowser:_shortTraining.html.twig' with {'day.shorts': 'day.shorts'}%}
+                                 {% endfor %}
+                            </td>
+                            <td class="l">
+                                {{ day.date|date("d.m.") }}
+                                <a data-size="small" class="window" href="{{ day.date|date("d.m.y") }}"><i class="fa fa-fw fa-plus fa-grey"></i></a>
+                                {% if day.date|date('dmy') == 'now'|date('dmy') %}
+                                <b>{{ day.date|date("D") }}</b>
+                                {% else %}
+                                {{ day.date|date("D") }}
+                                {% endif %}
+                            </td>
+                            <td colspan=""></td>
+                                 </tr>
+                            {% endif %}
+                        {% endfor %}
 
-                        {% if trainings %}
-                             {% for training in trainings %}
-                                 {{ training.time }}
-                             {% endfor %}
-                        {% else %}    
-                           empty
-                        {% endif %}    
-                        </tr>
-                         {% endfor %}    
                         </tbody>
                         <tbody>
                         </tbody>

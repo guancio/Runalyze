@@ -9,8 +9,6 @@ class Dataset {
 
     private $em;
 
-    private $account;
-    
     /**
      * Values from database
      * @var array
@@ -35,20 +33,9 @@ class Dataset {
          
     }
     
-    public function setCategory($category) {
-        $this->category = $category;
-    }
-    
     public function getAll() {
         return $this->ValuesFromDB;
     }
     
-    public function getForDatabrowser() {
-        
-    }
-    
-    public function get($key) {
-        return $this->ValuesFromDB[$this->category][$key];
-    }
 
 }
