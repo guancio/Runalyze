@@ -1,17 +1,14 @@
 <?php
 namespace Runalyze\CoreBundle\Service;
 
-
 /**
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Service
  */
-class Configuration {
+class Dataset {
 
     private $em;
 
-    private $category;
-    
     private $account;
     
     /**
@@ -22,16 +19,16 @@ class Configuration {
         
     public function __construct($em)
     {
-        $this->em = $em->getRepository('RunalyzeCoreBundle:Conf');
+        $this->em = $em->getRepository('RunalyzeCoreBundle:Dataset');
         $this->loadAll();
     }
 
     public function loadAll() {
-         $DBconf = $this->em->findAllByAccount('1');
+         $DBconf = $this->em->findAll();
 
 
          foreach($DBconf as $key => $conf) {
-             $values[$conf->getCategory()][$conf->getKey()] = $conf->getValue();
+             $values[$conf->getName()] = $conf;
         }
          
          $this->ValuesFromDB = $values;
@@ -42,8 +39,12 @@ class Configuration {
         $this->category = $category;
     }
     
-    public function getCategory($category) {
-        return $this->ValuesFromDB[$category];
+    public function getAll() {
+        return $this->ValuesFromDB;
+    }
+    
+    public function getForDatabrowser() {
+        
     }
     
     public function get($key) {

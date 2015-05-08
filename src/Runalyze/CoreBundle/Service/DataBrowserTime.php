@@ -15,7 +15,9 @@ class DataBrowserTime {
      * @return array of start and end time
      */    
     static function week($time) {
-        return array(Time::Weekstart($time), Time::Weekend($time));
+        $date['start'] = Time::Weekstart($time);
+        $date['end']  = Time::Weekend($time);
+        return $date;
     }
     
     /**
@@ -23,8 +25,9 @@ class DataBrowserTime {
      * @return array of start and end time
      */    
     static function month($time) {
-		return array(mktime(0, 0, 0, date("m", $time), 1, date("Y", $time)),
-			mktime(23, 59, 50, date("m", $time)+1, 0, date("Y", $time)));
+        $date['start'] = mktime(0, 0, 0, date("m", $time), 1, date("Y", $time));
+        $date['end'] = mktime(23, 59, 50, date("m", $time)+1, 0, date("Y", $time));
+        return $date;
     }
     
 
@@ -33,8 +36,9 @@ class DataBrowserTime {
      * @return array of start and end time
      */
     static function year($time) {
-            return array(mktime(0, 0, 0, 1, 1, date("Y", $time)),
-                    mktime(23, 59, 50, 12, 31, date("Y", $time)));
+        $date['start'] = mktime(0, 0, 0, 1, 1, date("Y", $time));
+        $date['end'] = mktime(23, 59, 50, 12, 31, date("Y", $time));
+        return $date;
     }  
     
     /**

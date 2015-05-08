@@ -15,11 +15,13 @@
                     <span id="calendar-link" class="link" title="Calendar"><i class="fa fa-fw fa-calendar"></i></span><a class="ajax" href="{{ path('databrowser', {'start': backtime.start, 'end': backtime.end}) }}" target="data-browser-inner" rel="" title="{% trans %}back{% endtrans %}">
                         <i class="fa fa-fw fa-chevron-left"></i></a><a class="ajax" href="{{ path('databrowser', {'start': nexttime.start, 'end': nexttime.end}) }}" target="data-browser-inner" rel="" title="{% trans %}next{% endtrans %}"><i class="fa fa-fw fa-chevron-right"></i></a>
                     </div>
-                <h1>{{ title.month }}, {{ title.year }}, {{ title.week }}. {% trans %}week{% endtrans %}</h1>
+                        <h1><a class="ajax" href="{{ path('databrowser', {'start': month.start, 'end': month.end}) }}" target="data-browser-inner" rel="" title="{% trans %}Show month{% endtrans %}">{{ title.month }},</a>
+                            <a class="ajax" href="{{ path('databrowser', {'start': year.start, 'end': year.end}) }}" target="data-browser-inner" rel="" title="{% trans %}Show year{% endtrans %}">{{ title.year }},</a>
+                            <a class="ajax" href="{{ path('databrowser', {'start': week.start, 'end': week.end}) }}" target="data-browser-inner" rel="" title="{% trans %}Show week{% endtrans %}">{{ title.week }}. {% trans %}week{% endtrans %}</a>
+</h1>
             </div>
             <div class="panel-content">
                 <div id="data-browser-calendar">
-
                     <div id="widget-calendar">
                     </div>
 
@@ -32,5 +34,25 @@
                         <span class="button" id="calendar-submit">{% trans %}Show selection{% endtrans %}</span>
                     </div>
                 </div>
+                <div id="data-browser-container">
+                    <table class="zebra-style">
+                        <tbody class="top-and-bottom-border">    
+                         {% for i in 0..days %}
+                        <tr class="r training">
+                            {{ i }}
+
+                        {% if trainings %}
+                             {% for training in trainings %}
+                                 {{ training.time }}
+                             {% endfor %}
+                        {% else %}    
+                           empty
+                        {% endif %}    
+                        </tr>
+                         {% endfor %}    
+                        </tbody>
+                        <tbody>
+                        </tbody>
+		</table>
             </div>
 

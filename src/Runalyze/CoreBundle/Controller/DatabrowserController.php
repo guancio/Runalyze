@@ -19,28 +19,32 @@ class DatabrowserController extends Controller
     public function indexAction(Request $request)
     {
         $accountid = $this->getUser()->getID();
-        $title['month'] = Time::Month(date("m", time()));
-        $title['year'] = date("Y", time());
-        $title['week'] = date("W", time());
         $em = $this->getDoctrine()->getManager();
         
         $time = $this->initTimestamps($request);
         
-        $starttime = $time['start'];
-        $endtime = $time['end'];
-        
-        $backtime = DBTime::prevTimestamps($starttime, $endtime);
-        $nexttime = DBTime::nextTimestamps($starttime, $endtime);
-        dump($nexttime);
-        dump($title);
-        
-        $trainings = $em->getRepository('RunalyzeCoreBundle:Training')->findByTimeRangeForAccount($starttime, $endtime, $accountid);
+        $title['month'] = Time::Month(date("m", $time['start']));
+        $title['year'] = date("Y", $time['start']);
+        $title['week'] = date("W", $time['start']);
+        $backtime = DBTime::prevTimestamps($time['start'], $time['end']);
+        $nexttime = DBTime::nextTimestamps($time['start'], $time['end']);
+        $year = DBTime::year($time['start']);
+        $month = DBTime::month($time['start']);
+        $week = DBTime::week($time['start']);
+        $dataset = $this->get('runalyze.dataset')->getAll();
+        $trainings = $em->getRepository('RunalyzeCoreBundle:Training')->findByTimeRangeForAccount($time['start'], $time['end'], $accountid);
         dump($trainings);
-        print_r($trainings);
         return $this->render('RunalyzeCoreBundle:Databrowser:databrowser.html.twig',
                 array('title' => $title,
                       'backtime' => $backtime,
-                      'nexttime' => $nexttime));
+                      'nexttime' => $nexttime,
+                      'days' => $time['days'],
+                      'year' => $year,
+                      'month' => $month,
+                      'week' => $week,
+                      'trainings' => $trainings,
+                      'dataset' => $dataset
+                    ));
     }
     
     /**
@@ -48,8 +52,7 @@ class DatabrowserController extends Controller
      */
     protected function initTimestamps(Request $request) {
         $dbConf = $this->get('runalyze.configuration')->getCategory('data-browser');
-        dump($dbConf);
-            if (!empty($request->query->get('start')) && !empty($request->query->get('end'))){
+            if(!$request->query->get('start') && !$request->query->get('end')) {
 
                     if ($dbConf['DB_DISPLAY_MODE'] != 'week') {
                             $rdata['start'] = mktime(0, 0, 0, date("m"), 1, date("Y"));
@@ -63,7 +66,6 @@ class DatabrowserController extends Controller
                    $rdata['end']   = $request->query->get('end');
             }
             $rdata['days'] = round(($rdata['end'] - $rdata['start']) / 86400);
-            echo $rdata['days'];
             return $rdata;
     }
 
