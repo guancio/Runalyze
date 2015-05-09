@@ -26,13 +26,13 @@
 	<a class="tab logo" href="" title="Runalyze">Runalyze</a>
         <a class="tab right" href="{{ path('logout') }}" title="Logout>
 		<i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;{% trans %}Logout{% endtrans %}</a>
-		<a class="tab right b" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_account"><i class="fa fa-fw fa-lg fa-user"></i>{{ app.user.username }}</a>
+		<a class="tab right b" href="configuration/account"><i class="fa fa-fw fa-lg fa-user"></i>{{ app.user.username }}</a>
 
 
 	<span class="left b">
-		<a class="tab" href=""><i class="fa fa-fw fa-lg fa-cog"></i>{% trans %}Configuration{% endtrans %}</a>
-		<a class="tab" href=""><i class="fa fa-fw fa-lg fa-dashboard"></i>{% trans %}Tools{% endtrans %}</a>
-		<a class="tab" href=""><i class="fa fa-fw fa-lg fa-question-circle"></i>{% trans %}Help{% endtrans %}</a>
+		<a class="window tab" href="configuration"><i class="fa fa-fw fa-lg fa-cog"></i>{% trans %}Configuration{% endtrans %}</a>
+		<a class="window tab" href="tools"><i class="fa fa-fw fa-lg fa-dashboard"></i>{% trans %}Tools{% endtrans %}</a>
+		<a class="window tab" href="{{ path('help') }}"><i class="fa fa-fw fa-lg fa-question-circle"></i>{% trans %}Help{% endtrans %}</a>
 	</span>
 </div>
         <div id="container">

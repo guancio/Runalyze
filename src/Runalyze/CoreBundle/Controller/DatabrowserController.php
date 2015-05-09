@@ -64,12 +64,7 @@ class DatabrowserController extends Controller
                 }
         }
         
-        
-        
-        dump($days);
-
-
-        return $this->render('RunalyzeCoreBundle:Databrowser:databrowser.html.twig',
+                return $this->render('RunalyzeCoreBundle:Databrowser:databrowser.html.twig',
                 array('title' => $title,
                       'backtime' => $backtime,
                       'nexttime' => $nexttime,

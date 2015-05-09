@@ -80,4 +80,13 @@ class DefaultController extends Controller
                 array('users' => $users, 
                       'userkm' => $userkm));
     }
+    
+    /**
+    * @Security("has_role('ROLE_USER')")
+    * @Route("/help", name="help")
+    */
+    public function helpAction()
+    {
+        return $this->render('RunalyzeCoreBundle:Default:help.html.twig');
+    }
 }

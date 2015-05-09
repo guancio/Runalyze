@@ -14,11 +14,17 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
-
+    mailer_sender:     ~
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     
     runalyze:
         openweather_api_key:    ~
+        nokia_here_appid:    ~
+        nokia_here_token:    ~
+        garmin_api_key:    ~
+        maintenance_mode:    false
+
+
     
