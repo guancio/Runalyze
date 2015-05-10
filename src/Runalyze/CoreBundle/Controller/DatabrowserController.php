@@ -35,7 +35,8 @@ class DatabrowserController extends Controller
         $month = DBTime::month($time['start']);
         $week = DBTime::week($time['start']);
         //Get Dataset
-        $dataset = $this->get('runalyze.dataset')->getAll();
+        $dataset = $this->get('runalyze.dataset')->getActive();
+        dump($dataset);
         //Get needed trainings
         $trainings = $em->getRepository('RunalyzeCoreBundle:Training')->findByTimeRangeForAccount($time['start'], $time['end'], $accountid);
         //Get ShortSports
@@ -59,8 +60,8 @@ class DatabrowserController extends Controller
                 $w = Time::diffInDays($Training->getTime(), $time['start']);
                  $tr = $this->get('runalyze.training');
                  $tr->set($Training);
-                 $tr->getVerticalOscillation();
-                 echo $tr->getJdIntensity();
+                 $tr->VerticalOscillation();
+                 echo $tr->JdIntensity()."<br>";
                  
                 if (in_array($Training->getSportid(), $shortSport)) {
                         $days[$w]['shorts'][]    = $Training;

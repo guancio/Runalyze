@@ -24,17 +24,24 @@ class Dataset {
     public function loadAll() {
          $DBconf = $this->em->findAll();
 
-
-         foreach($DBconf as $key => $conf) {
-             $values[$conf->getName()] = $conf;
-        }
-         
-         $this->ValuesFromDB = $values;
+         $this->ValuesFromDB = $DBconf;
          
     }
     
     public function getAll() {
-        return $this->ValuesFromDB;
+        
+        foreach($DBconf as $key => $conf) {
+             $values[$conf->getName()] = $conf;
+        }
+        return $values;
+    }
+    
+    public function getActive() {
+         foreach($this->ValuesFromDB as $key => $conf) {
+             if($conf->getActive() === true)
+                $values[$conf->getName()] = $conf;
+        }
+        return $values;
     }
     
 

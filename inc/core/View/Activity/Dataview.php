@@ -155,31 +155,8 @@ class Dataview {
 		return '';
 	}
 
-	/**
-	 * Date and daytime
-	 * @return string
-	 */
-	public function dateAndDaytime() {
-		return $this->date().' '.$this->daytime();
-	}
 
-	/**
-	 * Weekday
-	 * @return string
-	 */
-	public function weekday() {
-		return Time::Weekday( date('w', $this->Activity->timestamp()) );
-	}
 
-	/**
-	 * Duration
-	 * @return \Runalyze\Activity\Duration
-	 */
-	public function duration() {
-		return $this->object($this->Duration, function($Activity){
-			return new Duration($Activity->duration());
-		});
-	}
 
 	/**
 	 * Get elapsed time
