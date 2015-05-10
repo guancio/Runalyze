@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Runalyze\CoreBundle\Service\DataBrowserTime as DBTime;
 use Runalyze\CoreBundle\Service\Time;
+use Runalyze\CoreBundle\Service\ActivityView;
 
 class DatabrowserController extends Controller
 {
@@ -56,7 +57,11 @@ class DatabrowserController extends Controller
 
         foreach ($trainings as $Training) {
                 $w = Time::diffInDays($Training->getTime(), $time['start']);
-
+                 $tr = $this->get('runalyze.training');
+                 $tr->set($Training);
+                 $tr->getVerticalOscillation();
+                 echo $tr->getJdIntensity();
+                 
                 if (in_array($Training->getSportid(), $shortSport)) {
                         $days[$w]['shorts'][]    = $Training;
                 } else {
