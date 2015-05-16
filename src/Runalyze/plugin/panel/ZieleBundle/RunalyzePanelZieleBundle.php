@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\plugin\panel\PanelZieleBundle;
+namespace Runalyze\plugin\panel\ZieleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

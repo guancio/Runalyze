@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\plugin\panel\PanelSchuheBundle;
+namespace Runalyze\plugin\panel\SchuheBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

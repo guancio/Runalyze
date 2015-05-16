@@ -17,6 +17,12 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Runalyze\CoreBundle\RunalyzeCoreBundle(),
+            new Runalyze\plugin\panel\PrognoseBundle\RunalyzePanelPrognoseBundle(),
+            new Runalyze\plugin\panel\RechenspieleBundle\RunalyzePanelRechenspieleBundle(),
+            new Runalyze\plugin\panel\SchuheBundle\RunalyzePanelSchuheBundle(),
+            new Runalyze\plugin\panel\SportlerBundle\RunalyzePanelSportlerBundle(),
+            new Runalyze\plugin\panel\SportsBundle\RunalyzePanelSportsBundle(),
+            new Runalyze\plugin\panel\ZieleBundle\RunalyzePanelZieleBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

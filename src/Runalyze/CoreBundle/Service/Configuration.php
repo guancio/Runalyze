@@ -12,7 +12,7 @@ class Configuration {
 
     private $category;
     
-    private $account;
+    private $accountid;
     
     /**
      * Values from database
@@ -23,12 +23,14 @@ class Configuration {
     public function __construct($em)
     {
         $this->em = $em->getRepository('RunalyzeCoreBundle:Conf');
-        $this->loadAll();
     }
 
+    public function setAccountid($accountid) {
+        $this->accountid = $accountid;
+        $this->loadAll();
+    }
     public function loadAll() {
-         $DBconf = $this->em->findAllByAccount('1');
-
+         $DBconf = $this->em->findAllByAccount($this->accountid);
 
          foreach($DBconf as $key => $conf) {
              $values[$conf->getCategory()][$conf->getKey()] = $conf->getValue();

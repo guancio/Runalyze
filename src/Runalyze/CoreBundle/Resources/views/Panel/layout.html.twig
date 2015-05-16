@@ -1,0 +1,19 @@
+<div class="panel" id="panel-<pluginid>">
+    <div class="panel-heading">
+        <div class="panel-menu">
+               {% block panelmenu %}{% endblock %}
+        </div>
+
+        <h1 class="link clap">{% block paneltitel %}{% endblock %}</h1>
+
+        <div class="hover-icons">
+            {% block panelhover %}{% endblock %}
+        </div>
+    </div>
+
+    <div class="panel-content">
+            {% block panelcontent %}{% endblock %}
+    </div>
+    {% block panelsubcontent %}{% endblock %}
+
+</div>

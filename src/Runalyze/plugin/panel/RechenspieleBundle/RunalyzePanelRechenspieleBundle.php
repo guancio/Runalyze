@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\plugin\panel\PanelRechenspieleBundle;
+namespace Runalyze\plugin\panel\RechenspieleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

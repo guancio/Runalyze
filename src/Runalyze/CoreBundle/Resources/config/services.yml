@@ -1,9 +1,33 @@
 services:
+    runalyze.account_factory:
+        class: Runalyze\CoreBundle\Factory\AccountFactory
+        arguments: [@security.context]
+    runalyze.account:
+        class: Runalyze\CoreBundle\Entity\Account
+        factory_service: runalyze.account_factory
+        factory_method: get
+        
+         
     runalyze.configuration:
         class: Runalyze\CoreBundle\Service\Configuration
-        arguments: [@doctrine.orm.entity_manager] 
+        arguments: [@doctrine.orm.entity_manager]          
+        
+    runalyze.conf_factory:
+        class: Runalyze\CoreBundle\Factory\ConfigurationFactory
+        arguments: 
+            - @runalyze.account
+            - @runalyze.configuration
+            
+    runalyze.conf:
+        class: Configuration
+        factory_service: runalyze.conf_factory
+        factory_method: get
+
     runalyze.dataset:
         class: Runalyze\CoreBundle\Service\Dataset
+        arguments: [@doctrine.orm.entity_manager] 
+    runalyze.dataset.factory:
+        class: Runalyze\CoreBundle\Service\DatasetFactory
         arguments: [@doctrine.orm.entity_manager] 
     runalyze.training:
         class: Runalyze\CoreBundle\Service\ActivityView
@@ -12,3 +36,4 @@ services:
         class: Runalyze\CoreBundle\Service\Sport
         arguments: [@doctrine.orm.entity_manager] 
         
+

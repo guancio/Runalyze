@@ -23,7 +23,7 @@ class DatabrowserController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $time = $this->initTimestamps($request);
-        
+        dump($time);
         //Get title
         $title['month'] = Time::Month(date("m", $time['start']));
         $title['year'] = date("Y", $time['start']);
@@ -37,6 +37,7 @@ class DatabrowserController extends Controller
         //Get Dataset
         $dataset = $this->get('runalyze.dataset')->getActive();
         dump($dataset);
+        dump($this->get('runalyze.conf')->getCategory('data-browser'));
         //Get needed trainings
         $trainings = $em->getRepository('RunalyzeCoreBundle:Training')->findByTimeRangeForAccount($time['start'], $time['end'], $accountid);
         //Get ShortSports
@@ -61,7 +62,7 @@ class DatabrowserController extends Controller
                  $tr = $this->get('runalyze.training');
                  $tr->set($Training);
                  $tr->VerticalOscillation();
-                 echo $tr->JdIntensity()."<br>";
+
                  
                 if (in_array($Training->getSportid(), $shortSport)) {
                         $days[$w]['shorts'][]    = $Training;
@@ -87,7 +88,9 @@ class DatabrowserController extends Controller
      * Init private timestamps from request
      */
     protected function initTimestamps(Request $request) {
-        $dbConf = $this->get('runalyze.configuration')->getCategory('data-browser');
+        $dbConf = $this->get('runalyze.configuration');
+        $dbConf->setAccountid($this->getUser()->getID());
+        $dbConf = $dbConf->getCategory('data-browser');
             if(!$request->query->get('start') && !$request->query->get('end')) {
 
                     if ($dbConf['DB_DISPLAY_MODE'] != 'week') {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\plugin\panel\PanelSportsBundle;
+namespace Runalyze\plugin\panel\SportsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
