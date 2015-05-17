@@ -1,6 +1,6 @@
 <?php
 
-namespace Runalyze\plugin\panel\SportlerBundle\Controller;
+namespace Runalyze\plugin\panel\SportsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +11,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('RunalyzePanelSportlerBundle::index.html.twig');
+        return $this->render('RunalyzePanelSportsBundle::index.html.twig');
     }
 }

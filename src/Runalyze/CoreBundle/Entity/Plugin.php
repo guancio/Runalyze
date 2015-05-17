@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Plugin
  *
  * @ORM\Table(name="plugin", indexes={@ORM\Index(name="accountid", columns={"accountid"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Runalyze\CoreBundle\Entity\PluginRepository")
  */
 class Plugin
 {

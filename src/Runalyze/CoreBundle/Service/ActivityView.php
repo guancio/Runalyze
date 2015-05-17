@@ -5,6 +5,8 @@
  */
 namespace Runalyze\CoreBundle\Service;
 
+use Runalyze\Activity\Duration;
+
 class ActivityView {
     
         protected $Dataset;
@@ -58,6 +60,16 @@ class ActivityView {
 		return '';
 	}
         
+	/**
+	 * Get elapsed time
+	 * @return string
+	 */
+	public function elapsedTime() {
+		if ($this->Activity->getElapsedTime() < $this->Activity->getDuration())
+			return '-:--:--';
+
+		return Duration::format($this->Activity->getElapsedTime());
+	}
 	/**
 	 * Get power
 	 * @return string power with unit
