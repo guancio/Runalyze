@@ -1,3 +1,11 @@
 runalyze_core:
     resource: "@RunalyzeCoreBundle/Resources/config/routing.yml"
     prefix:   /
+
+runalyze_panel_prognose:
+    resource: "@RunalyzePanelPrognoseBundle/Resources/config/routing.yml"
+    prefix:   /plugin/panel/prognose
+    
+runalyze_panel_rechenspiele:
+    resource: "@RunalyzePanelRechenspieleBundle/Resources/config/routing.yml"
+    prefix:   /plugin/panel/rechenspiele

@@ -1,0 +1,3 @@
+security:
+    resource: "@RunalyzePanelPrognoseBundle/Controller/DefaultController.php"
+    type:    annotation

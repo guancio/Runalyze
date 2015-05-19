@@ -1,12 +1,12 @@
 {% extends 'RunalyzeCoreBundle:Panel:layout.html.twig' %}
 {% block panelmenu %}
 <ul>
-    <li><a href="plugin/panel/Rechenspiele/window.plot.php" class="window atLeft" rel="tooltip" data-original-title="{% trans %}Show form{% endtrans %}"><i class="fa fa-fw fa-line-chart"></i></a></li>
-    <li><a href="plugin/panel/Rechenspiele/window.php" class="window atLeft" rel="tooltip" data-original-title="{% trans %}How are these values calculated?{% endtrans %}"><i class="fa fa-fw fa-magic"></i></a></li>
-    <li><a href="plugin/panel/Rechenspiele/window.info.php" class="window atLeft" rel="tooltip" data-original-title="{% trans %}Explanations: What are VDOT and TRIMP?{% endtrans %}"><i class="fa fa-fw fa-info-circle"></i></a></li>
+    <li><a href="plugin/panel/rechenspiele/form" class="window atLeft" rel="tooltip" data-original-title="{% trans %}Show form{% endtrans %}"><i class="fa fa-fw fa-line-chart"></i></a></li>
+    <li><a href="plugin/panel/rechenspiele/explanation" class="window atLeft" rel="tooltip" data-original-title="{% trans %}How are these values calculated?{% endtrans %}"><i class="fa fa-fw fa-magic"></i></a></li>
+    <li><a href="plugin/panel/rechenspiele/info" class="window atLeft" rel="tooltip" data-original-title="{% trans %}Explanations: What are VDOT and TRIMP?{% endtrans %}"><i class="fa fa-fw fa-info-circle"></i></a></li>
 </ul>
 {% endblock %}
-{% block paneltitel %}{% trans %}Prognosis{% endtrans %}{% endblock %}
+{% block paneltitel %}{% trans %}Calculations{% endtrans %}{% endblock %}
 {% block panelhover %}
 <a data-size="small" class="window" href="call/call.Plugin.config.php?id=41"><i class="fa fa-fw fa-cog"></i></a>
 <span class="link up" rel="41"><i class="fa fa-fw fa-arrow-up"></i></span>

@@ -13,4 +13,8 @@ class DefaultController extends Controller
     {
         return $this->render('RunalyzePanelPrognoseBundle::index.html.twig');
     }
+    public function calcAction()
+    {
+        return $this->render('RunalyzePanelPrognoseBundle::calc.html.twig');
+    }
 }

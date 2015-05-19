@@ -398,19 +398,7 @@ class Prognose_PrognosisWindow {
 		$this->Formular->addSubmitButton( __('Show prognosis'));
 	}
 
-	/**
-	 * Display
-	 */
-	public function display() {
-		echo '<div class="panel-heading">';
-		$this->displayHeading();
-		echo '</div>';
-		echo '<div class="panel-content">';
-		$this->displayFormular();
-		echo '</div>';
-	}
-
-	/**
+/**
 	 * Display heading
 	 */
 	protected function displayHeading() {

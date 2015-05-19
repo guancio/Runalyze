@@ -26,15 +26,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	const CACHE_KEY_JD_POINTS = 'JDQuery';
 
-	/**
-	 * Name
-	 * @return string
-	 */
-	final public function name() {
-		return __('Calculations');
-	}
-
-	/**
+        /**
 	 * Description
 	 * @return string
 	 */
@@ -87,19 +79,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Configuration->addValue($ShowJD);
 
 		$this->setConfiguration($Configuration);
-	}
-
-	/**
-	 * Method for getting the right symbol(s)
-	 * @see PluginPanel::getRightSymbol()
-	 */
-	protected function getRightSymbol() {
-		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show form'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$MAGIC.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
-
-		return '<ul>'.$Links.'</ul>';
 	}
 
 	/**

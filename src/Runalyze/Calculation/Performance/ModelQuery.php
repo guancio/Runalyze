@@ -13,6 +13,16 @@ namespace Runalyze\Calculation\Performance;
  * @package Runalyze\Calculation\TrainingLoad
  */
 class ModelQuery {
+    
+        private $em;
+        
+	/**
+	 * Accountid
+	 * @var int
+	 */
+	protected $accountid = null;
+
+        
 	/**
 	 * Timestamp: from
 	 * @var int
@@ -39,13 +49,18 @@ class ModelQuery {
 
 	/**
 	 * Construct
+         * @paramt $em EntityManager
 	 * @param int $from [optional] timestamp
 	 * @param int $to [optional] timestamp
 	 */
-	public function __construct($from = null, $to = null) {
+	public function __construct($em, $from = null, $to = null) {
 		$this->setRange($from, $to);
+                $this->em = $em->getRepository('RunalyzeCoreBundle:Training');
 	}
-
+        
+        public function setAccountid($accountid) {
+            $this->accountid = $accountid;
+        }
 	/**
 	 * Set time range
 	 * @param int $from
@@ -84,7 +99,7 @@ class ModelQuery {
 	 * Execute
 	 * @param \PDOforRunalyze $DB
 	 */
-	public function execute(\PDOforRunalyze $DB) {
+	public function execute() {
 		$this->Data = array();
 		$Today = new \DateTime('today 23:59');
 
@@ -102,25 +117,32 @@ class ModelQuery {
 	 * @return string
 	 */
 	private function query() {
-		if (is_null($this->From) && is_null($this->To)) {
-			$Where = '1';
+            $qb = $this->em->createQueryBuilder('t');
+            $qb->select('t.time,DATE(FROM_UNIXTIME(`t.time`)) as `date`, SUM(`t.trimp`) as `trimp`');
+            $qb->from('RunalyzeCoreBundle:Training', 't');
+                    $parameters = array(
+                        'from' => $this->From,
+                        'to' => $this->To,
+                        'sportid' => $this->Sportid
+                    );
+		if (!is_null($this->From) && !is_null($this->To)) {
+			$qb->Where('1');
 		} else {
-			$Where = '`time` BETWEEN '.(int)$this->From.' AND '.(int)$this->To;
+                        $qb->Where('t.time BETWEEN :from AND :to');
 		}
 
 		if (!is_null($this->Sportid)) {
-			$Where .= ' AND `sportid`='.(int)$this->Sportid;
+                       $qb->andWhere('t.sportid = :sportid');
 		}
-
-		$Query = '
-			SELECT
-				`time`,
+                $qb->groupBy('date');
+		/*	`time`,
 				DATE(FROM_UNIXTIME(`time`)) as `date`,
-				SUM(`trimp`) as `trimp`
-			FROM `'.PREFIX.'training`
-			WHERE '.$Where.'
-			GROUP BY `date`';
+				SUM(`trimp`) as `trimp`*/
 
-		return $Query;
+                $qb->setParameters($parameters);
+                $result = $qb->getQuery()->getArrayResult();
+                dump($result);
+                
+		return $result;
 	}
 }
