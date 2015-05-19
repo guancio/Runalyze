@@ -13,4 +13,12 @@ class DefaultController extends Controller
     {
         return $this->render('RunalyzePanelRechenspieleBundle::index.html.twig');
     }
+    
+    /**
+    * @Route("/info", name="Rechenspiele_info")
+    */
+    public function infoAction()
+    {
+        return $this->render('RunalyzePanelRechenspieleBundle::info.html.twig');
+    }
 }

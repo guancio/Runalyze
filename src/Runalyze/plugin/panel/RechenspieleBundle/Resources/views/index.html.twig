@@ -1,4 +1,111 @@
 {% extends 'RunalyzeCoreBundle:Panel:layout.html.twig' %}
-{% block panelmenu %}Menue{% endblock %}
+{% block panelmenu %}
+<ul>
+    <li><a href="plugin/panel/Rechenspiele/window.plot.php" class="window atLeft" rel="tooltip" data-original-title="{% trans %}Show form{% endtrans %}"><i class="fa fa-fw fa-line-chart"></i></a></li>
+    <li><a href="plugin/panel/Rechenspiele/window.php" class="window atLeft" rel="tooltip" data-original-title="{% trans %}How are these values calculated?{% endtrans %}"><i class="fa fa-fw fa-magic"></i></a></li>
+    <li><a href="plugin/panel/Rechenspiele/window.info.php" class="window atLeft" rel="tooltip" data-original-title="{% trans %}Explanations: What are VDOT and TRIMP?{% endtrans %}"><i class="fa fa-fw fa-info-circle"></i></a></li>
+</ul>
+{% endblock %}
 {% block paneltitel %}{% trans %}Prognosis{% endtrans %}{% endblock %}
-{% block panelcontent %}Panelcontent{% endblock %}
+{% block panelhover %}
+<a data-size="small" class="window" href="call/call.Plugin.config.php?id=41"><i class="fa fa-fw fa-cog"></i></a>
+<span class="link up" rel="41"><i class="fa fa-fw fa-arrow-up"></i></span>
+<span class="link down" rel="41"><i class="fa fa-fw fa-arrow-down"></i></span>
+<span class="link" onclick="Runalyze.reloadPlugin('41');"><i class="fa fa-fw fa-refresh"></i></span>
+{% endblock %}
+{% block panelcontent %}
+<table class="fullwidth nomargin">
+    <tbody>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="{% trans %}Current average VDOT{% endtrans %}"><strong>{% trans %}VDOT{% endtrans %}</strong><small></small></span>
+            </td>
+            <td style="width:99%;vertical-align:middle;"><div class="progress-bar-container progress-bar-container-inline">
+                    <div class="progress-bar-inner">
+                        <div class="progress-bar colored-blue" style="width:60%;"></div>
+                    </div>
+                            
+                </div>
+            </td>
+            <td class="r">60.24</td>
+        </tr>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="<em>{% trans %}Experimental value!{% endtrans %}</em><br>100 &amp;#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT."><strong>{% trans %}Basic endurance{% endtrans %}</strong>&nbsp;<small></small></span>
+            </td>
+            
+            <td style="width:99%;vertical-align:middle;">
+                <div class="progress-bar-container progress-bar-container-inline">
+                    <div class="progress-bar-inner"><div class="progress-bar colored-blue" style="width:35%;"></div></div>
+                </div>
+            </td>
+            <td class="r">35 %</td>
+        </tr>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="{% trans %}Actual Training Load{% endtrans %}<br><small>{% trans %}Average training impulse of the last weeks in relation to your maximal value.{% endtrans %}</small>"><strong>{% trans %}Fatigue{% endtrans %}</strong><small>({% trans %}ATL{% endtrans %})</small></span>
+            </td>
+            <td style="width:99%;vertical-align:middle;"><div class="progress-bar-container progress-bar-container-inline" rel="tooltip" data-original-title="{% trans %}Current value:{% endtrans %} 16<br>{% trans %}Maximal value:{% endtrans %} 219<br>{% trans %}as percentage:{% endtrans %} 7 &amp;#37;">
+                    <div class="progress-bar-inner">
+                        <div class="progress-bar colored-blue" style="width:7%;"></div>
+                    </div>
+                </div>
+            </td>
+            <td class="r">7 %</td>
+        </tr>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="{% trans %}Chronical Training Load{% endtrans %}<br><small>{% trans %}Average training impulse of the last months in relation to your maximal value.{% endtrans %}</small>"><strong>{% trans %}Fitness level{% endtrans %}</strong><small>({% trans %}CTL{% endtrans %})</small></span>
+            </td>
+            <td style="width:99%;vertical-align:middle;">
+                <div class="progress-bar-container progress-bar-container-inline" rel="tooltip" data-original-title="{% trans %}Current value:{% endtrans %} 55<br>{% trans %}Maximal value:{% endtrans %} 140<br>{% trans %}as percentage:{% endtrans %} 39 &amp;#37;">
+                    <div class="progress-bar-inner"><div class="progress-bar colored-blue" style="width:39%;"></div></div>
+                </div>
+            </td>
+            <td class="r">39 %</td>
+        </tr>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="{% trans %}Training Stress Balance (= CTL - ATL){% endtrans %}<br>&amp;gt; 0: {% trans %}You are relaxing.{% endtrans %}<br>< 0: {% trans %}You are training hard.{% endtrans %}"><strong>{% trans %}Stress Balance{% endtrans %}</strong><small>(TSB)</small></span>
+            </td>
+            <td style="width:99%;vertical-align:middle;">
+                <div class="progress-bar-container progress-bar-container-inline" rel="tooltip" data-original-title="TSB = CTL - ATL = 55 - 16 = +39">
+                    <div class="progress-bar-inner"><div class="progress-bar colored-green balance-positive" style="width:39%;"></div></div>
+                </div>
+            </td>
+                <td class="r">+39</td>
+        </tr>
+        <tr>
+            <td><span rel="tooltip" data-original-title="{% trans %}Monotony{% endtrans %}<br><small>{% trans %}Monotony of your last seven days.{% endtrans %}<br>{% trans %}Values below 1.5 are preferable.{% endtrans %}</small>"><strong>{% trans %}Monotony{% endtrans %}</strong><small></small></span>
+            </td>
+            <td style="width:99%;vertical-align:middle;"><div class="progress-bar-container progress-bar-container-inline" rel="tooltip" data-original-title="{% trans %}Monotony = avg(Trimp)/stddev(Trimp){% endtrans %}">
+                    <div class="progress-bar-inner"><div class="progress-bar colored-green" style="width:15%;"></div>
+                    </div>
+                </div>
+            </td>
+                    <td class="r">0.62</td>
+        </tr>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="{% trans %}Training strain{% endtrans %}<br><small>{% trans %}of your last seven days{% endtrans %}</small>"><strong>{% trans %}Training strain{% endtrans %}</strong>&nbsp;<small></small></span>
+            </td><td style="width:99%;vertical-align:middle;">
+                <div class="progress-bar-container progress-bar-container-inline" rel="tooltip" data-original-title="{% trans %}Training strain = sum(Trimp)*Monotony{% endtrans %}">
+                    <div class="progress-bar-inner"><div class="progress-bar colored-green" style="width:4%;"></div>
+                    </div>
+                </div>
+            </td><td class="r">135</td>
+        </tr>
+        <tr>
+            <td>
+                <span rel="tooltip" data-original-title="{% trans %}Training intensity by Jack Daniels.{% endtrans %}<br>{% trans %}Jack Daniels considers the following levels:{% endtrans %}<br>{% trans %}50 points: Beginner{% endtrans %}<br>{% trans %}100 points: Advanced Runner{% endtrans %}<br>{% trans %}200 points: Pro Runner{% endtrans %}"><strong>{% trans %}Training points{% endtrans %}</strong>&nbsp;<small></small></span>
+            </td>
+            <td style="width:99%;vertical-align:middle;"><div class="progress-bar-container progress-bar-container-inline" rel="tooltip" data-original-title="{% trans %}This week{% endtrans %}: 0 {% trans %}training points{% endtrans %}<br>{% trans %}Prognosis{% endtrans %}: ca. 0 {% trans %}training points{% endtrans %}<br>{% trans %}Last week{% endtrans %}: 19 {% trans %}training points{% endtrans %}"><div class="progress-bar-inner"><div class="progress-bar colored-light" style="width:0%;"></div>
+                        <div class="progress-bar colored-red" style="width:0%;"></div><div class="progress-bar-goal" style="left:9%;"></div>
+                    </div>
+                </div>
+            </td>
+            <td class="r">0</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
