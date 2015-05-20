@@ -23,7 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/rest-bundle": "@dev",
         "jms/serializer-bundle": "@dev",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*"
+        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "beberlei/DoctrineExtensions": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

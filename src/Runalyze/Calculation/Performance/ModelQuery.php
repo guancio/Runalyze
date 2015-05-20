@@ -53,8 +53,11 @@ class ModelQuery {
 	 * @param int $from [optional] timestamp
 	 * @param int $to [optional] timestamp
 	 */
-	public function __construct($em, $from = null, $to = null) {
-		$this->setRange($from, $to);
+	public function __construct($em, $account, $from = null, $to = null) {
+		//$this->setRange($from, $to);
+                if($account) {
+                    $this->accountid = $account->getId();
+                }
                 $this->em = $em->getRepository('RunalyzeCoreBundle:Training');
 	}
         
@@ -103,12 +106,18 @@ class ModelQuery {
 		$this->Data = array();
 		$Today = new \DateTime('today 23:59');
 
-		$Statement = $DB->query($this->query());
-		while ($row = $Statement->fetch()) {
+		$Statement = $this->query();
+                foreach($Statement as $state) {
+			$index = (int)$Today->diff(new \DateTime('@'.$state['time']))->format('%r%a');
+			$this->Data[$index] = $state['trimp'];                 
+                }
+                    
+		/*while ($row = $Statement->fetch()) {*/
 			// Don't rely on MySQLs timezone => calculate diff based on timestamp
-			$index = (int)$Today->diff(new \DateTime('@'.$row['time']))->format('%r%a');
-			$this->Data[$index] = $row['trimp'];
-		}
+			//$index = (int)$Today->diff(new \DateTime('@'.$row['time']))->format('%r%a');
+			//$this->Data[$index] = $row['trimp'];
+		/*}*/
+                //return $Statement;
 	}
 
 	/**
@@ -117,21 +126,20 @@ class ModelQuery {
 	 * @return string
 	 */
 	private function query() {
+            echo "test";
             $qb = $this->em->createQueryBuilder('t');
-            $qb->select('t.time,DATE(FROM_UNIXTIME(`t.time`)) as `date`, SUM(`t.trimp`) as `trimp`');
-            $qb->from('RunalyzeCoreBundle:Training', 't');
-                    $parameters = array(
-                        'from' => $this->From,
-                        'to' => $this->To,
-                        'sportid' => $this->Sportid
-                    );
+            $qb->select('t.time, DATE(FROM_UNIXTIME(t.time)) as date, SUM(t.trimp) as trimp');
+            //$qb->from('RunalyzeCoreBundle:Training', 't');
+            $parameters['accountid'] = $this->accountid;
+            $qb->Where('t.accountid = :accountid');
 		if (!is_null($this->From) && !is_null($this->To)) {
-			$qb->Where('1');
-		} else {
-                        $qb->Where('t.time BETWEEN :from AND :to');
+                    $parameters['from'] = $this->From;
+                    $parameters['to'] = $this->To;
+                        $qb->andWhere('t.time BETWEEN :from AND :to');
 		}
 
 		if (!is_null($this->Sportid)) {
+                    $parameters['sportid'] = $this->Sportid;
                        $qb->andWhere('t.sportid = :sportid');
 		}
                 $qb->groupBy('date');
@@ -141,8 +149,6 @@ class ModelQuery {
 
                 $qb->setParameters($parameters);
                 $result = $qb->getQuery()->getArrayResult();
-                dump($result);
-                
 		return $result;
 	}
 }
