@@ -21,65 +21,9 @@ use Runalyze\View\Tooltip;
  * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
-	/**
-	 * @var string
-	 */
-	const CACHE_KEY_JD_POINTS = 'JDQuery';
 
-        /**
-	 * Description
-	 * @return string
-	 */
-	final public function description() {
-		return __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
-	}
 
-	/**
-	 * Display long description
-	 */
-	protected function displayLongDescription() {
-		echo HTML::p( __('Runalyze uses a lot of tables and derived formulas from Jack Daniels\' Running formula. '.
-						'That way Runalyze is able to predict your current VDOT value.') );
-	}
 
-	/**
-	 * Init configuration
-	 */
-	protected function initConfiguration() {
-		$ShowPaces = new PluginConfigurationValueBool('show_trainingpaces', __('Show: Paces'));
-		$ShowPaces->setTooltip( __('Paces based on your curent VDOT') );
-		$ShowPaces->setDefaultValue(true);
-
-		$ShowTrimp = new PluginConfigurationValueBool('show_trimpvalues', __('Show: ATL/CTL/TSB'));
-		$ShowTrimp->setTooltip( __('Show actual/chronical training load and stress balance (based on TRIMP)') );
-		$ShowTrimp->setDefaultValue(true);
-
-		$ShowTrimpExtra = new PluginConfigurationValueBool('show_trimpvalues_extra', __('Show: Monotony/TS'));
-		$ShowTrimpExtra->setTooltip( __('Show monotony and training strain (based on TRIMP)') );
-		$ShowTrimpExtra->setDefaultValue(true);
-
-		$ShowVDOT = new PluginConfigurationValueBool('show_vdot', __('Show: VDOT'));
-		$ShowVDOT->setTooltip( __('Predict current VDOT value') );
-		$ShowVDOT->setDefaultValue(true);
-
-		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Basic endurance'));
-		$ShowBE->setTooltip( __('Guess current basic endurance') );
-		$ShowBE->setDefaultValue(true);
-
-		$ShowJD = new PluginConfigurationValueBool('show_jd_intensity', __('Show: Training points'));
-		$ShowJD->setTooltip( __('Training intensity by Jack Daniels') );
-		$ShowJD->setDefaultValue(true);
-
-		$Configuration = new PluginConfiguration($this->id());
-		$Configuration->addValue($ShowPaces);
-		$Configuration->addValue($ShowTrimp);
-		$Configuration->addValue($ShowTrimpExtra);
-		$Configuration->addValue($ShowVDOT);
-		$Configuration->addValue($ShowBE);
-		$Configuration->addValue($ShowJD);
-
-		$this->setConfiguration($Configuration);
-	}
 
 	/**
 	 * Display the content
@@ -101,28 +45,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * Show values
 	 */
 	protected function showValues() {
-		$ModelQuery = new Performance\ModelQuery();
-		$ModelQuery->execute(DB::getInstance());
 
-		$TSBmodel = new Performance\TSB(
-			$ModelQuery->data(),
-			Configuration::Trimp()->daysForCTL(),
-			Configuration::Trimp()->daysForATL()
-		);
-		$TSBmodel->calculate();
 
-		$MonotonyQuery = new Performance\ModelQuery();
-		$MonotonyQuery->setRange(time()-(Monotony::DAYS-1)*DAY_IN_S, time());
-		$MonotonyQuery->execute(DB::getInstance());
-
-		$Monotony = new Monotony($MonotonyQuery->data());
-		$Monotony->calculate();
-
-		$VDOT        = Configuration::Data()->vdot();
-		$ATLmax      = Configuration::Data()->maxATL();
-		$CTLmax      = Configuration::Data()->maxCTL();
-		$ModelATLmax = $TSBmodel->maxFatigue();
-		$ModelCTLmax = $TSBmodel->maxFitness();
 
 		if ($ModelATLmax > $ATLmax) {
 			Configuration::Data()->updateMaxATL($ModelATLmax);
@@ -134,17 +58,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			$CTLmax = $ModelCTLmax;
 		}
 
-		$ATLabsolute = $TSBmodel->fatigueAt(0);
-		$CTLabsolute = $TSBmodel->fitnessAt(0);
-		$TSBabsolute = $TSBmodel->performanceAt(0);
-		$TrimpValues = array(
-			'ATL'		=> round(100*$ATLabsolute/$ATLmax),
-			'ATLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
-			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
-			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
-			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
-			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute),
-		);
+
+
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
 		$maxTrimpToBalanced = ceil($TSBmodel->maxTrimpToBalanced($CTLabsolute, $ATLabsolute));
@@ -271,11 +186,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 							)
 					)
 				),
-				'bar-tooltip'	=> 'Training strain = sum(Trimp)*Monotony',
 				'value'	=> round($Monotony->trainingStrain()),
-				'title'	=> __('Training&nbsp;strain'),
-				'small'	=> '',
-				'tooltip'	=> __('Training strain<br><small>of your last seven days</small>')
+
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_jd_intensity'),
@@ -288,11 +200,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'value'	=> $JDPointsThisWeek,
 				'title'	=> __('Training&nbsp;points'),
 				'small'	=> '',
-				'tooltip'	=> __('Training intensity by Jack Daniels.<br>'.
-					'Jack Daniels considers the following levels:<br>'.
-					'50 points: Beginner<br>'.
-					'100 points: Advanced Runner<br>'.
-					'200 points: Pro Runner')
+
 			)
 		);
 

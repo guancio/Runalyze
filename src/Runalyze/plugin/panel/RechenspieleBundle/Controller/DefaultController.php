@@ -29,8 +29,16 @@ class DefaultController extends Controller
                 $confTrimp['CTL_DAYS'],
                 $confTrimp['ATL_DAYS']
         );
-      dump($confTrimp);
+
         $TSBmodel->calculate();    
+
+        $MonotonyQuery = $this->get('runalyze.performance.model');
+        $MonotonyQuery->setRange(time()-(Monotony::DAYS-1)*86400, time());
+        $MonotonyQuery->execute();
+        $Monotony = new Monotony($MonotonyQuery->data());
+        $Monotony->calculate();
+                dump($Monotony->valueAsPercentage());
+                //dump($Monotony->trainingStrainAsPercentage());
         
         $VDOT        = $confData['VDOT_FORM'];
         $ATLmax      = $confData['MAX_ATL'];
@@ -40,16 +48,40 @@ class DefaultController extends Controller
         $ATLabsolute = $TSBmodel->fatigueAt(0);
         $CTLabsolute = $TSBmodel->fitnessAt(0);
         $TSBabsolute = $TSBmodel->performanceAt(0);
-      /*  $TrimpValues = array(
+        $TrimpValues = array(
                 'ATL'		=> round(100*$ATLabsolute/$ATLmax),
-                'ATLstring'	=> $confTrimp['TRIMP_MODEL_IN_PERCENT'] ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
+                'ATLstring'	=> $confTrimp['TRIMP_MODEL_IN_PERCENT'] ? round(100*$ATLabsolute/$ATLmax) : $ATLabsolute,
                 'CTL'		=> round(100*$CTLabsolute/$CTLmax),
-                'CTLstring'	=> $confTrimp['TRIMP_MODEL_IN_PERCENT'] ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
+                'CTLstring'	=> $confTrimp['TRIMP_MODEL_IN_PERCENT'] ? round(100*$CTLabsolute/$CTLmax) : $CTLabsolute,
                 'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
-                'TSBstring'	=> $confTrimp['TSB_IN_PERCENT'] ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute),
-        );*/
-
-        return $this->render('RunalyzePanelRechenspieleBundle::index.html.twig');
+               //'TSBstring'	=> $confTrimp['TSB_IN_PERCENT'] ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute),
+        );
+        $restDays = ceil($TSBmodel->restDays($CTLabsolute, $ATLabsolute));
+        $Values = array(
+            'vdot'=>array('value' => number_format($VDOT, 2),
+                          'bar' => ''),
+            'basicEndurance'=> array('value'=> 'test',
+                                     'bar' => ''),
+            'atl'=> array('value'=> $TrimpValues['ATLstring'],
+                        'bar' => $TrimpValues['ATL']),
+            'ctl'=> array('value'=> $TrimpValues['CTLstring'],
+                'bar' => $TrimpValues['CTL']),
+            'tsb'=> array('value'=> 'test',
+                'bar' => $TrimpValues['TSB']),
+            'restdays'=> array('value'=> $restDays,
+                'bar' => ''),
+            'easytrimp'=> array('value'=> 'test',
+                'bar' => ''),
+            'monotony'=> array('value'=> 'test',
+                'bar' => ''),
+            'trainingstrain'=> array('value'=> round($Monotony->trainingStrain()),
+                'bar' => ''),
+            'trainingpoints'=> array('value'=> 'test',
+                'bar' => ''),
+        );
+        dump($Values);
+        return $this->render('RunalyzePanelRechenspieleBundle::index.html.twig',
+                array('values' => $Values));
     }
     
     /**

@@ -27,7 +27,7 @@
                             
                 </div>
             </td>
-            <td class="r">60.24</td>
+            <td class="r">{{ values.vdot.value }}</td>
         </tr>
         <tr>
             <td>
@@ -39,7 +39,7 @@
                     <div class="progress-bar-inner"><div class="progress-bar colored-blue" style="width:35%;"></div></div>
                 </div>
             </td>
-            <td class="r">35 %</td>
+            <td class="r">{{ values.basicEndurance.value }} %</td>
         </tr>
         <tr>
             <td>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </td>
-            <td class="r">7 %</td>
+            <td class="r">{{ values.atl.value }} %</td>
         </tr>
         <tr>
             <td>
@@ -62,7 +62,7 @@
                     <div class="progress-bar-inner"><div class="progress-bar colored-blue" style="width:39%;"></div></div>
                 </div>
             </td>
-            <td class="r">39 %</td>
+            <td class="r">{{ values.ctl.value }} %</td>
         </tr>
         <tr>
             <td>
@@ -73,7 +73,7 @@
                     <div class="progress-bar-inner"><div class="progress-bar colored-green balance-positive" style="width:39%;"></div></div>
                 </div>
             </td>
-                <td class="r">+39</td>
+                <td class="r">{{ values.tsb.value }}</td>
         </tr>
         <tr>
             <td><span rel="tooltip" data-original-title="{% trans %}Monotony{% endtrans %}<br><small>{% trans %}Monotony of your last seven days.{% endtrans %}<br>{% trans %}Values below 1.5 are preferable.{% endtrans %}</small>"><strong>{% trans %}Monotony{% endtrans %}</strong><small></small></span>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </td>
-                    <td class="r">0.62</td>
+                    <td class="r">{{ values.monotony.value }}</td>
         </tr>
         <tr>
             <td>
@@ -93,7 +93,7 @@
                     <div class="progress-bar-inner"><div class="progress-bar colored-green" style="width:4%;"></div>
                     </div>
                 </div>
-            </td><td class="r">135</td>
+            </td><td class="r">{{ values.trainingstrain.value }}</td>
         </tr>
         <tr>
             <td>
@@ -104,8 +104,42 @@
                     </div>
                 </div>
             </td>
-            <td class="r">0</td>
+            <td class="r">{{ values.trainingpoints.value }}</td>
         </tr>
     </tbody>
 </table>
+
+
 {% endblock %}
+
+    {% block panelsubcontent %}
+    <div class="panel-content panel-sub-content">
+<table class="fullwidth nomargin">
+    <tbody>
+        <tr>
+            <td><span rel="tooltip" data-original-title="Easy pace running refers to warm-ups, cool-downs and recovery runs."><strong>Easy</strong></span></td>
+            <td class="r"><em>4:30</em> - <em>5:39</em>/km</td>
+        </tr>
+        <tr>
+            <td><span rel="tooltip" data-original-title="Steady run or long repeats (e.g. 2 x 4 miles at marathon pace)"><strong>Marathon</strong></span>
+            </td>
+            <td class="r"><em>3:58</em> - <em>4:26</em>/km</td>
+        </tr>
+        <tr>
+            <td><span rel="tooltip" data-original-title="Steady, prolonged or tempo runs or intermittent runs, also called cruise intervals."><strong>Threshold</strong></span>
+            </td>
+            <td class="r"><em>3:47</em> - <em>4:01</em>/km</td>
+        </tr>
+        <tr>
+            <td><span rel="tooltip" data-original-title="Intervals: It takes about two minutes for you to gear up to functioning at VO2max so the ideal duration of an interval is 3-5 minutes each."><strong>Interval</strong></span></td>
+            <td class="r"><em>3:20</em> - <em>3:30</em>/km</td>
+        </tr>
+        <tr>
+            <td><span rel="tooltip" data-original-title="Repetitions are fast, but not necessarily &quot;hard,&quot; because work bouts are relatively short and are followed by relatively long recovery bouts."><strong>Repetition</strong></span>
+            </td>
+            <td class="r"><em>3:02</em> - <em>3:10</em>/km</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+    {% endblock %}
