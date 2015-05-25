@@ -51,5 +51,10 @@ class Configuration {
     public function get($key) {
         return $this->ValuesFromDB[$this->category][$key];
     }
+    
+    public function set($category, $key, $value, $reloadConfig = false) {
+        //TODO Update config vars
+       // $this->em->
+    }
 
 }

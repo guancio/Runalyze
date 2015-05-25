@@ -47,7 +47,9 @@
                                 </td>
                                 <td class="l">
                                     {{ day.date|date("d.m.") }}
+                                    {% if dayCreateTraining != 'false' %}
                                     <a data-size="small" class="window" href="{{ day.date|date("d.m.y") }}"><i class="fa fa-fw fa-plus fa-grey"></i></a>
+                                    {% endif %}
                                     
                                     {{ day.date|date("D") }}
                                  </td>
@@ -61,7 +63,9 @@
                             </td>
                             <td class="l">
                                 {{ day.date|date("d.m.") }}
-                                <a data-size="small" class="window" href="{{ day.date|date("d.m.y") }}"><i class="fa fa-fw fa-plus fa-grey"></i></a>
+                                    {% if dayCreateTraining != 'false' %}
+                                        <a data-size="small" class="window" href="{{ day.date|date("d.m.y") }}"><i class="fa fa-fw fa-plus fa-grey"></i></a>
+                                    {% endif %}
                                 {% if day.date|date('dmy') == 'now'|date('dmy') %}
                                 <b>{{ day.date|date("D") }}</b>
                                 {% else %}

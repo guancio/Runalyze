@@ -21,7 +21,7 @@ class DatabrowserController extends Controller
     {
         $accountid = $this->getUser()->getID();
         $em = $this->getDoctrine()->getManager();
-        
+        $confDatabrowser = $this->get('runalyze.conf')->getCategory('data-browser');
         $time = $this->initTimestamps($request);
         dump($time);
         //Get title
@@ -70,7 +70,7 @@ class DatabrowserController extends Controller
                         $days[$w]['trainings'][] = $Training;
                 }
         }
-        
+        dump($confDatabrowser['DB_SHOW_CREATELINK_FOR_DAYS']);
                 return $this->render('RunalyzeCoreBundle:Databrowser:databrowser.html.twig',
                 array('title' => $title,
                       'backtime' => $backtime,
@@ -80,7 +80,8 @@ class DatabrowserController extends Controller
                       'month' => $month,
                       'week' => $week,
                       'shortSport' => $shortSport,
-                      'dataset' => $dataset
+                      'dataset' => $dataset,
+                      'dayCreateTraining' => $confDatabrowser['DB_SHOW_CREATELINK_FOR_DAYS']
                     ));
     }
     

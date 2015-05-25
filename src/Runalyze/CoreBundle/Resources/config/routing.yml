@@ -9,3 +9,7 @@ security:
     type:    annotation
 logout:
     path:   /logout
+configuration:
+    resource: "@RunalyzeCoreBundle/Controller/ConfigurationController.php"
+    prefix:   /configuration
+    type:    annotation

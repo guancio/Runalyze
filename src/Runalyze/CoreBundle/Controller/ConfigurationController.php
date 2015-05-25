@@ -20,4 +20,14 @@ class ConfigurationController extends Controller
 
     }
 
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @Route("/account", name="account")
+     */
+    public function accountAction()
+    {
+
+            return $this->render('RunalyzeCoreBundle:Configuration:index.html.twig');
+
+    }
 }

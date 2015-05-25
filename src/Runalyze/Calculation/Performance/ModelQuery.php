@@ -111,13 +111,6 @@ class ModelQuery {
 			$index = (int)$Today->diff(new \DateTime('@'.$state['time']))->format('%r%a');
 			$this->Data[$index] = $state['trimp'];                 
                 }
-                    
-		/*while ($row = $Statement->fetch()) {*/
-			// Don't rely on MySQLs timezone => calculate diff based on timestamp
-			//$index = (int)$Today->diff(new \DateTime('@'.$row['time']))->format('%r%a');
-			//$this->Data[$index] = $row['trimp'];
-		/*}*/
-                //return $Statement;
 	}
 
 	/**
@@ -126,10 +119,9 @@ class ModelQuery {
 	 * @return string
 	 */
 	private function query() {
-            echo "test";
+
             $qb = $this->em->createQueryBuilder('t');
             $qb->select('t.time, DATE(FROM_UNIXTIME(t.time)) as date, SUM(t.trimp) as trimp');
-            //$qb->from('RunalyzeCoreBundle:Training', 't');
             $parameters['accountid'] = $this->accountid;
             $qb->Where('t.accountid = :accountid');
 		if (!is_null($this->From) && !is_null($this->To)) {
@@ -149,6 +141,7 @@ class ModelQuery {
 
                 $qb->setParameters($parameters);
                 $result = $qb->getQuery()->getArrayResult();
+                dump($result);
 		return $result;
 	}
 }

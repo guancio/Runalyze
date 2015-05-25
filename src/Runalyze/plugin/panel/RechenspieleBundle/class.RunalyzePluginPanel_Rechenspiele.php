@@ -46,40 +46,17 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function showValues() {
 
-
-
-		if ($ModelATLmax > $ATLmax) {
-			Configuration::Data()->updateMaxATL($ModelATLmax);
-			$ATLmax = $ModelATLmax;
-		}
-
-		if ($ModelCTLmax > $CTLmax) {
-			Configuration::Data()->updateMaxCTL($ModelCTLmax);
-			$CTLmax = $ModelCTLmax;
-		}
-
-
-
-		$TSBisPositive = $TrimpValues['TSB'] > 0;
-
-		$maxTrimpToBalanced = ceil($TSBmodel->maxTrimpToBalanced($CTLabsolute, $ATLabsolute));
-		$restDays = ceil($TSBmodel->restDays($CTLabsolute, $ATLabsolute));
-
-		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
-		if (is_null($JDQuery)) {
 			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
 			$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
 			$JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
 			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
-			Cache::set(self::CACHE_KEY_JD_POINTS, $JDQuery, '600');
-		}
+
 		$JDPointsLastWeek = $JDQuery['LastWeek'];
 		$JDPointsThisWeek = $JDQuery['ThisWeek'];
 		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
 
 		$Values = array(
-			array(
-				'show'	=> $this->Configuration()->value('show_vdot'),
+			array(				'show'	=> $this->Configuration()->value('show_vdot'),
 				'bars'	=> array(
 					new ProgressBarSingle(2*round($VDOT - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
@@ -240,24 +217,17 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * Show paces
 	 */
 	protected function showPaces() {
-		echo '</div>';
-		echo '<div class="panel-content panel-sub-content">';
 
-		echo '<table class="fullwidth nomargin">';
 
 		$Paces = $this->getArrayForPaces();
 		$VDOT = new VDOT(Configuration::Data()->vdot());
 
 		foreach ($Paces as $Pace) {
 			$DisplayedString = '<strong>'.$Pace['short'].'</strong>';
-
-			echo '<tr>';
-			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
 			echo '<td class="r"><em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em> - <em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>/km</td>';
 			echo '</tr>';
 		}
 
-		echo '</table>';
 	}
 
 	/**

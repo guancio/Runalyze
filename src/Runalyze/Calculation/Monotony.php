@@ -132,9 +132,9 @@ class Monotony {
 	 * Scale value for percentage
 	 * @return int
 	 */
-	public function trainingStrainAsPercentage() {
+	public function trainingStrainAsPercentage($maxAtl) {
 		// TODO: Use another maximum?
-		$max = 2 * Configuration::Data()->maxATL() * static::DAYS;
+		$max = 2 * $maxAtl * static::DAYS;
 		$Scale = new Scale\Percental();
 		$Scale->setMaximum($max);
 
