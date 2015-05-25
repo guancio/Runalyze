@@ -15,6 +15,20 @@ class ImporterFiletypeGPX extends ImporterFiletypeAbstract {
 	 * @param string $String string to parse
 	 */
 	protected function setParserFor($String) {
-		$this->Parser = new ParserGPXMultiple($String);
+            if($this->isFromRuntastic($String))
+		$this->Parser = new ParserGPXRuntasticMultiple($String);
+            else 
+                $this->Parser = new ParserGPXMultiple($String);
+             
+                
 	}
+        
+	/**
+	 * Is this string from Sigma DataCenter => V4?
+	 * @param string $String
+	 * @return bool
+	 */
+	private function isFromRuntastic(&$String) {
+		return strpos($String, 'runtastic') !== false;
+	} 
 }
