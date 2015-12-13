@@ -28,3 +28,7 @@ node_modules/
 web/assets/
 view/cache/
 npm-debug.log
+
+#symfony
+/cache/
+/logs/
