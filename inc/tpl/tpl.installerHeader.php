@@ -41,7 +41,7 @@
 					echo '<li'.$liClass.'><a href="?lang='.$key.'">'.$lang_arr[0].'</a></li>';
 				}
 			?>
-			</ul>
+			<li><a href="http://translate.runalyze.de">Help us translating</a></li></ul>
                     </li>
                     </ul>
 		</div>
