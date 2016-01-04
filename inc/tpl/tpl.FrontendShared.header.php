@@ -24,7 +24,9 @@
 
 <div id="headline">
 	<a class="tab logo b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">RUNALYZE</a>
-
+	<span class="left b">
+<?php if (!SessionAccountHandler::isLoggedIn()) { ?><a class="tab"  href="https://runalyze.com"><i class="fa fa-fw fa-lg fa-user-plus"></i><?php NBSP ?>Get your own account - Be a RUNALYZE powered athlete</a><?php } ?>
+	</span>
 	<span class="tab right">
 		<?php
 		if (isset($User) && isset($User['username']) && strlen($User['username']) > 1) {
@@ -36,6 +38,6 @@
 	</span>
 </div>
 <p class="c">
-<iframe src="https://rcm-eu.amazon-adsystem.com/e/cm?t=runalyze-21&o=3&p=48&l=st1&mode=books-de&search=Laufen&fc1=000000&lt1=_blank&lc1=3366FF&bg1=FFFFFF&f=ifr" marginwidth="0" marginheight="0" width="728" height="90" border="0" frameborder="0" style="border:none;" scrolling="no"></iframe>
+<?php include_once 'advertise.php'; ?>
 
 </p>

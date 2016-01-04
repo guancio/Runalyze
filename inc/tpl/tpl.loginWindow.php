@@ -192,6 +192,6 @@ $NumUserOn = SessionAccountHandler::getNumberOfUserOnline();
 	<br>
 	<?php printf(_n('<strong>%d</strong> athlete is online.','<strong>%d</strong> athletes are online.', $NumUserOn), $NumUserOn); ?><br>
 </p>
-
+<p class="info c">Share the love of RUNALYZE and <a href="http://blog.runalyze.com/share">show that you're a RUNALYZE powered athlete</a></p>
 <?php if (isset($_POST['new_username'])) echo Ajax::wrapJSforDocumentReady("show('reg');") ?>
 <?php if (isset($_POST['send_username'])) echo Ajax::wrapJSforDocumentReady("show('pwf');") ?>
