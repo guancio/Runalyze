@@ -93,7 +93,10 @@ class Tcx extends AbstractFileExporter
         $Loop = new Trackdata\Loop($this->Context->trackdata());
 
         while (!$Loop->isAtEnd()) {
-            $Loop->nextKilometer();
+            if ($this->Context->trackdata()->has(Trackdata\Entity::DISTANCE))
+               $Loop->nextKilometer();
+	    else
+	       $Loop->goToEnd();
             $TimeInSeconds = $Loop->difference(Trackdata\Entity::TIME);
 
             $Lap = $this->Activity->addChild('Lap');
