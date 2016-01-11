@@ -8,6 +8,7 @@ use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\Activity\HeartRate;
 use Runalyze\Util\Time;
 use Runalyze\Model\Sport;
 use Runalyze\Model\Factory;
@@ -19,6 +20,8 @@ $PLUGINKEY = 'RunalyzePluginStat_Record';
  * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Record extends PluginStat {
+	private $types = array();
+
 	/**
 	 * Name
 	 * @return string
@@ -39,6 +42,8 @@ class RunalyzePluginStat_Record extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$this->initData();
+
 		$this->setAnalysisNavigation();
 		$this->setSportsNavigation();
 		$this->setYearsNavigation(true, true, true);
@@ -46,30 +51,23 @@ class RunalyzePluginStat_Record extends PluginStat {
 		$this->setHeaderWithSportAndYear();
 	}
 
+	private function initData() {
+ 		$this->types = [
+			'p' => __('by pace'),
+			'bpm' => __('by heart rate'),
+			'vdot' => __('by vdot')
+			];
+	}
 
 	private function setAnalysisNavigation() {
-		if ($this->dat == '') $this->dat = 'km';
-		$LinkList = '<li class="with-submenu"><span class="link">' . $this->getAnalysisType() . '</span><ul class="submenu">';
-		$LinkList .= '<li' . ('km' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by distance'), $this->sportid, $this->year, 'km') . '</li>';
-		$LinkList .= '<li' . ('s' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by time'), $this->sportid, $this->year, 's') . '</li>';
-		$LinkList .= '<li' . ('em' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by elevation'), $this->sportid, $this->year, 'em') . '</li>';
-		$LinkList .= '<li' . ('kcal' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by calories'), $this->sportid, $this->year, 'kcal') . '</li>';
-		$LinkList .= '<li' . ('trimp' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by trimp'), $this->sportid, $this->year, 'trimp') . '</li>';
-		$LinkList .= '<li' . ('n' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by number'), $this->sportid, $this->year, 'n') . '</li>';
+		if ($this->dat == '') $this->dat = 'p';
+		$LinkList = '<li class="with-submenu"><span class="link">' . $this->types[$this->dat]. '</span><ul class="submenu">';
+		foreach ($this->types as $code => $name) {
+		  $LinkList .= '<li' . ($code == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink($name, $this->sportid, $this->year, $code) . '</li>';
+		}
 		$LinkList .= '</ul></li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
-	}
-
-	private function getAnalysisType() {
-		$types = ['km' => __('by distance'),
-			's' => __('by time'),
-			'em' => __('by elevation'),
-			'kcal' => __('by calories'),
-			'trimp' => __('by trimp'),
-			'n' => __('by number')
-			];
-		return $types[$this->dat];
 	}
 
 	/**
@@ -96,7 +94,13 @@ class RunalyzePluginStat_Record extends PluginStat {
 
 		$Sports = SportFactory::AllSports();
 		foreach ($Sports as $sport) {
-		    $Configuration->addValue( new PluginConfigurationValueArray('pb_distances'.$sport['id'], __('Distances for yearly comparison for '.$sport['name']), '', array(1, 3, 5)) );
+		    if ($sport['id'] == Configuration::General()->runningSport())
+		       $stdValues = array(1, 3, 5, 10, 21.1, 42.2);
+		    else if ($sport['name'] == 'Swimming')
+		       $stdValues = array(0.1, 0.5, 0.8, 1, 2, 5);
+		    else
+		       $stdValues = array(1, 3, 5, 10, 20, 30, 40, 50);
+		    $Configuration->addValue( new PluginConfigurationValueArray('pb_distances'.$sport['id'], __('Distances for yearly comparison for '.$sport['name']), '', $stdValues) );
 		}
 		
 		$this->setConfiguration($Configuration);
@@ -115,12 +119,19 @@ class RunalyzePluginStat_Record extends PluginStat {
 
 		foreach ($this->Configuration()->value('pb_distances'.$this->sportid) as $distance) {
         		$Request = DB::getInstance()->prepare('
-        			 SELECT `id`, `time`, `s`, `distance`, `sportid`
+        			 SELECT `id`, `time`, `s`, `distance`, `sportid`, `elevation`, `pulse_avg`, `vdot`
         			 FROM `'.PREFIX.'training`
         			 WHERE `sportid`=:sportid
         			      '.$this->getYearDependenceForQuery().'
+				      '.(('p' == $this->dat)?' AND `distance` > 0':'').'
+				      '.(('bpm' == $this->dat)?' AND `pulse_avg` > 0':'').'
+				      '.(('vdot' == $this->dat)?' AND `vdot` > 0':'').'
         			      AND `distance`>=:distance
-         			 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10'
+         			 ORDER BY
+				       '.(('p' == $this->dat)?'(`distance`/`s`) DESC, `s` DESC':'').'
+				       '.(('bpm' == $this->dat)?'`pulse_avg`, `s` DESC':'').'
+				       '.(('vdot' == $this->dat)?'`vdot` DESC, `s` DESC':'').'
+				 LIMIT 10'
         	      	);
         		
         		$Request->bindValue('sportid', $this->sportid);
@@ -136,9 +147,18 @@ class RunalyzePluginStat_Record extends PluginStat {
         		   echo '<td class="b l">'.$distance.' km</td>';
         		   $j = 0;
         		   foreach ($data as $j => $dat) {
-        		   	   $Pace = new Pace($dat['s'], $dat['distance']);
-        		   	   $Pace->setUnit($Sport->paceUnit());
-        		  	   $code = $Pace->valueWithAppendix();
+			   	   if ('p' == $this->dat) {
+         		   	      	$Pace = new Pace($dat['s'], $dat['distance']);
+        		   	      	$Pace->setUnit($Sport->paceUnit());
+					$code = $Pace->valueWithAppendix();
+				   }
+				   else if ('bpm' == $this->dat) {
+				   	$HeartRate = new HeartRate($dat['pulse_avg']);
+				   	$code = $HeartRate->string();
+				   }
+				   else if ('vdot' == $this->dat) {
+				   	$code = $dat['vdot'];
+				   }
         			   echo '<td class="small"><span title="'.date("d.m.Y",$dat['time']).'">
         			   	  '.Ajax::trainingLink($dat['id'], $code).'
         				   </span></td>';
