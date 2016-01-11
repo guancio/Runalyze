@@ -119,7 +119,7 @@ class RunalyzePluginStat_Record extends PluginStat {
 
 		foreach ($this->Configuration()->value('pb_distances'.$this->sportid) as $distance) {
         		$Request = DB::getInstance()->prepare('
-        			 SELECT `id`, `time`, `s`, `distance`, `sportid`, `elevation`, `pulse_avg`, `vdot`
+        			 SELECT `id`, `time`, `s`, `distance`, `sportid`, `pulse_avg`, `vdot`
         			 FROM `'.PREFIX.'training`
         			 WHERE `sportid`=:sportid
         			      '.$this->getYearDependenceForQuery().'
@@ -173,6 +173,38 @@ class RunalyzePluginStat_Record extends PluginStat {
         		  echo '<tr><td class="b l">'.$distance.' km</td><td colspan="10"><em>'.__('No data available').'</em></td></tr>';
 		}
 
+
+        	$Request = DB::getInstance()->prepare('
+        		SELECT `id`, `time`, `s`, `distance`, `sportid`
+        		FROM `'.PREFIX.'training`
+        		WHERE `sportid`=:sportid
+        		    '.$this->getYearDependenceForQuery().'
+			AND `distance` > 0
+         		ORDER BY `distance` DESC, `s` DESC
+                        LIMIT 10'
+        	);
+        		
+        	$Request->bindValue('sportid', $this->sportid);
+		$Request->execute();
+        	$data = $Request->fetchAll();
+        
+        	echo '<tr class="r">';
+        	echo '<td class="b l">'.__('Longest activities').'</td>';
+
+		if (!empty($data)) {
+		   $j = 0;
+        	   foreach ($data as $j => $dat) {
+		       $code = ($dat['distance'] != 0 ? Distance::format($dat['distance']) : Duration::format($dat['s']));
+		       echo '<td class="small"><span title="'.date("d.m.Y",$dat['time']).'">
+        	       	    '.Ajax::trainingLink($dat['id'], $code).'
+        		    </span></td>';
+                   }
+        	   for (; $j < 9; $j++)
+        	       echo HTML::emptyTD();
+		}
+		else 
+        	   echo '<td colspan="10"><em>'.__('No data available').'</em></td>';
+		echo '</tr>';
 		echo '</tbody>';
 		echo '</table>';
 	}
