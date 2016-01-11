@@ -45,7 +45,7 @@ class RunalyzePluginStat_Record extends PluginStat {
 		$this->initData();
 
 		$this->setAnalysisNavigation();
-		$this->setSportsNavigation();
+		$this->setSportsNavigation(true, true);
 		$this->setYearsNavigation(true, true, true);
 
 		$this->setHeaderWithSportAndYear();
@@ -110,14 +110,23 @@ class RunalyzePluginStat_Record extends PluginStat {
 	 * Display the table with general records
 	 */
 	private function displayRecord() {
+	    if ($this->sportid > 0) {
+	       $sportData = SportFactory::DataFor($this->sportid);
+	       $Sports = array($sportData);
+	    }
+	    else {
+	       $Sports = SportFactory::AllSports();
+	    }
+            foreach ($Sports as $sportData) {
+		$Sport = new Sport\Entity($sportData);
+
 		echo '<table class="fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="11" class="l">'.$rekord['name'].'</th></tr></thead>';
+		echo '<thead><tr><th colspan="11" class="l">'.$Sport->icon()->code().' '.$Sport->name().'</th></tr></thead>';
 		echo '<tbody>';
 
 		$Factory = new Factory(SessionAccountHandler::getId());
-		$Sport = $Factory->sport($this->sportid);
 
-		foreach ($this->Configuration()->value('pb_distances'.$this->sportid) as $distance) {
+		foreach ($this->Configuration()->value('pb_distances'.$sportData['id']) as $distance) {
         		$Request = DB::getInstance()->prepare('
         			 SELECT `id`, `time`, `s`, `distance`, `sportid`, `pulse_avg`, `vdot`
         			 FROM `'.PREFIX.'training`
@@ -134,7 +143,7 @@ class RunalyzePluginStat_Record extends PluginStat {
 				 LIMIT 10'
         	      	);
         		
-        		$Request->bindValue('sportid', $this->sportid);
+        		$Request->bindValue('sportid', $sportData['id']);
         		$Request->bindValue('distance', $distance);
         		$Request->execute();
         		$data = $Request->fetchAll();
@@ -169,8 +178,8 @@ class RunalyzePluginStat_Record extends PluginStat {
         		}
         	
         
-        		if (!$output)
-        		  echo '<tr><td class="b l">'.$distance.' km</td><td colspan="10"><em>'.__('No data available').'</em></td></tr>';
+        		// if (!$output)
+        		//   echo '<tr><td class="b l">'.$distance.' km</td><td colspan="10"><em>'.__('No data available').'</em></td></tr>';
 		}
 
 
@@ -184,7 +193,7 @@ class RunalyzePluginStat_Record extends PluginStat {
                         LIMIT 10'
         	);
         		
-        	$Request->bindValue('sportid', $this->sportid);
+        	$Request->bindValue('sportid', $sportData['id']);
 		$Request->execute();
         	$data = $Request->fetchAll();
         
@@ -207,6 +216,7 @@ class RunalyzePluginStat_Record extends PluginStat {
 		echo '</tr>';
 		echo '</tbody>';
 		echo '</table>';
+	   }
 	}
 
 }
