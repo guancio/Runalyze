@@ -186,6 +186,8 @@ class TrainingView {
 		if ($this->Context->hasHRV()) {
 			$this->Sections[] = new SectionHRV($this->Context);
 		}
+
+		$this->Sections[] = new SectionRecord($this->Context);
 	}
 
 	/**
