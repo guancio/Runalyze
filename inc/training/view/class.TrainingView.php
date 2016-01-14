@@ -122,6 +122,7 @@ class TrainingView {
 	 * Init sections
 	 */
 	protected function initSections() {
+		$this->Sections[] = new SectionRecord($this->Context);
 
 		if (Configuration::ActivityView()->mapFirst() && Configuration::ActivityView()->plotMode()->showCollection()) {
 
@@ -187,7 +188,6 @@ class TrainingView {
 			$this->Sections[] = new SectionHRV($this->Context);
 		}
 
-		$this->Sections[] = new SectionRecord($this->Context);
 	}
 
 	/**
