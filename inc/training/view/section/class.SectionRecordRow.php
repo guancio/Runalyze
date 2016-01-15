@@ -52,6 +52,17 @@ class SectionRecordRow extends TrainingViewSectionRowFullwidth {
 	}
 
 
+	protected function getTimeCondition() {
+		  if (!$this->useActDate && $this->rangeCode == 0)
+		     return '';
+
+		  if ($this->useActDate && $this->rangeCode == 0) {
+		     return ' AND `time` <="' . $this->Context->activity()->timestamp() .'" ';
+		  }
+
+		  return '';
+	}
+
 	protected function initData() {
                 $Factory = new PluginFactory();
                 $PluginRecord = $Factory->newInstance('RunalyzePluginStat_Record');
@@ -79,6 +90,7 @@ class SectionRecordRow extends TrainingViewSectionRowFullwidth {
 				          OR  (`distance`/`s`) = :pace
 				          AND `s` < :s)
 				    AND `id` <> :id
+				   '.$this->getTimeCondition().'
   		        ');
          
                 	$Request->bindValue('sportid', $this->Context->sport()->id());
@@ -99,6 +111,7 @@ class SectionRecordRow extends TrainingViewSectionRowFullwidth {
                 		 WHERE `sportid`=:sportid
          			       AND `distance` > 0
         			       AND `distance`>=:distance
+                                      '.$this->getTimeCondition().'
                  		 ORDER BY
          			      (`distance`/`s`) DESC, `s` DESC
 				 LIMIT '.$limit1.'
@@ -124,6 +137,7 @@ class SectionRecordRow extends TrainingViewSectionRowFullwidth {
 				 	       AND `distance` > 0
 				 	       AND `distance`>=:distance
 				 	       AND (`distance`/`s` - :pace) > 0
+                                              '.$this->getTimeCondition().'
 				 	 ORDER BY
 				 	      (`distance`/`s` - :pace), `s` DESC
 				 	 LIMIT 2
@@ -155,6 +169,7 @@ class SectionRecordRow extends TrainingViewSectionRowFullwidth {
 				 	       AND `distance` > 0
 				 	       AND `distance`>=:distance
 				 	       AND (:pace - `distance`/`s`) > 0
+                                              '.$this->getTimeCondition().'
 				 	 ORDER BY
 				 	      (`distance`/`s` - :pace), `s` DESC
 				 	 LIMIT 2
